@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jiajun Wang — Systems Programmer</title>
-  <meta name="description" content="Jiajun Wang (Ryan1202) — computer science student at XJTLU building Horizon, an x86_64 operating system in C and Rust." />
+  <meta name="description" content="Jiajun Wang (Ryan1202) — data science student at XJTLU building Horizon, an x86_64 operating system in C and Rust." />
   <meta name="author" content="Jiajun Wang" />
 
   <meta property="og:title" content="Jiajun Wang — Systems Programmer" />
@@ -82,7 +82,7 @@
           </h1>
 
           <p class="lede reveal-load">
-            Computer science student at XJTLU. I build the layer beneath the
+            Data science student at XJTLU. I build the layer beneath the
             software — an x86_64 operating system in C and Rust, and the tools
             around it.
           </p>
@@ -145,7 +145,7 @@
         <div class="sec-head">
           <span class="sec-num">01</span>
           <h2 class="sec-title" id="work-title">Selected work</h2>
-          <span class="sec-note">08 projects · 2021&ndash;2026</span>
+          <span class="sec-note">06 projects · 2021&ndash;2026</span>
         </div>
 
         <!-- Featured project -->
@@ -238,19 +238,8 @@
           </li>
 
           <li class="reveal">
-            <div class="proj proj-static">
-              <span class="proj-idx">06</span>
-              <span class="proj-body">
-                <span class="proj-title">Paging Viewer <span class="chip chip-local">local</span></span>
-                <span class="proj-desc">A Tauri desktop tool that takes a virtual address apart — page indices, offsets, bit layout — for x86-64 and custom paging presets.</span>
-              </span>
-              <span class="proj-meta"><span class="chip">React · Rust</span><span class="year">2026</span></span>
-            </div>
-          </li>
-
-          <li class="reveal">
             <a class="proj" href="https://github.com/Ryan1202/HuiHuTong" target="_blank" rel="noopener">
-              <span class="proj-idx">07</span>
+              <span class="proj-idx">06</span>
               <span class="proj-body">
                 <span class="proj-title">HuiHuTong <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
                 <span class="proj-desc">An Android utility that turns the screen up to full brightness the moment the campus gate QR code appears.</span>
@@ -259,16 +248,6 @@
             </a>
           </li>
 
-          <li class="reveal">
-            <div class="proj proj-static">
-              <span class="proj-idx">08</span>
-              <span class="proj-body">
-                <span class="proj-title">Synesthesia Beacon <span class="chip chip-local">private</span></span>
-                <span class="proj-desc">A native macOS proxy client in SwiftUI, built on the mihomo core — an exercise in writing software that feels like the platform it runs on.</span>
-              </span>
-              <span class="proj-meta"><span class="chip">Swift</span><span class="year">2026</span></span>
-            </div>
-          </li>
         </ul>
       </div>
     </section>
@@ -357,28 +336,29 @@
 
           <div class="about-copy">
             <p class="reveal lead">
-              I'm Jiajun — Ryan to most people — a computer science student at
-              Xi'an Jiaotong-Liverpool University.
+              I'm Jiajun — Ryan to most people — an undergraduate at Xi'an
+              Jiaotong-Liverpool University, studying Data Science and Big Data
+              Technology.
             </p>
             <p class="reveal">
-              Most of what I do happens below the application layer: page tables,
-              interrupt controllers, schedulers, and the bugs that only appear
-              when you boot your own code. Horizon started in 2021 as a 32-bit
-              toy kernel; it is now a higher-half x86_64 kernel that boots from
-              GRUB2 under QEMU, and it is slowly being rewritten in Rust module
-              by module.
+              Officially that means statistics, AI and large-scale data. In
+              practice I spend most of my time below the application layer: page
+              tables, interrupt controllers, schedulers, and the bugs that only
+              appear when you boot your own code. Horizon started in 2021 as a
+              32-bit toy kernel; it is now a higher-half x86_64 kernel that boots
+              from GRUB2 under QEMU, and it is slowly being rewritten in Rust
+              module by module.
             </p>
             <p class="reveal">
               When I'm not in QEMU I write small tools to understand formats and
               machines from first principles — a JPEG decoder, an MP3 decoder, a
-              red-black tree derived from 2-3-4 trees, a FAT image editor, a
-              paging visualiser. Different layers, same question: how does this
-              actually work?
+              red-black tree derived from 2-3-4 trees, a disk-image editor.
+              Different layers, same question: how does this actually work?
             </p>
 
             <dl class="facts reveal">
-              <div><dt>Based</dt><dd>Suzhou, China</dd></div>
-              <div><dt>Studying</dt><dd>BSc Computer Science, XJTLU</dd></div>
+              <div><dt>Based</dt><dd>Taicang, Suzhou, China</dd></div>
+              <div><dt>Studying</dt><dd>BEng Data Science &amp; Big Data Technology, XJTLU</dd></div>
               <div><dt>Focus</dt><dd>Kernels · memory · drivers</dd></div>
               <div><dt>Currently</dt><dd>Porting Horizon to Rust</dd></div>
             </dl>
@@ -389,9 +369,8 @@
           <h3 class="now-title"><span class="dot" aria-hidden="true"></span> Now</h3>
           <ul class="now-list">
             <li><span class="mono">Oct 2026</span> Reworking APIC and IRQ affinity in Horizon for multicore.</li>
-            <li><span class="mono">Oct 2026</span> Building Paging Viewer to make address translation visible.</li>
-            <li><span class="mono">2026</span> Extending Horizon's ACPI/AML support — SSDT and FACS are next.</li>
-            <li><span class="mono">2026</span> Writing a native macOS client in SwiftUI to learn a different kind of systems work.</li>
+            <li><span class="mono">Oct 2026</span> Extending Horizon's ACPI/AML support — SSDT and FACS are next.</li>
+            <li><span class="mono">2026</span> Writing up the IRQ and APIC rework in <span class="mono">doc/notes</span>.</li>
           </ul>
         </div>
       </div>
@@ -412,9 +391,9 @@
         </p>
 
         <div class="contact-rows reveal">
-          <a class="contact-row" href="mailto:ryan1202@foxmail.com">
+          <a class="contact-row" id="mailRow">
             <span class="contact-kind">Email</span>
-            <span class="contact-value">ryan1202@foxmail.com</span>
+            <span class="contact-value">ryan1202 <span class="at">[at]</span> foxmail.com</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19L19 5M19 5H8M19 5v11"/></svg>
           </a>
           <a class="contact-row" href="https://github.com/Ryan1202" target="_blank" rel="noopener">
@@ -426,7 +405,7 @@
 
         <div class="contact-meta reveal">
           <span class="mono">SUZHOU · UTC+8</span>
-          <span class="mono">XJTLU · BSC COMPUTER SCIENCE</span>
+          <span class="mono">XJTLU · DATA SCIENCE &amp; BIG DATA TECHNOLOGY</span>
         </div>
       </div>
     </section>

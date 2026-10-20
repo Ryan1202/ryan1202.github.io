@@ -1007,6 +1007,11 @@ a.proj:hover .proj-title svg { opacity: 1; transform: none; }
   line-height: 1.1;
   overflow-wrap: anywhere;
 }
+.contact-value .at {
+  font-size: .68em;
+  letter-spacing: 0;
+  color: var(--text-3);
+}
 .contact-row svg {
   flex-shrink: 0;
   width: clamp(20px, 2.4vw, 30px);
