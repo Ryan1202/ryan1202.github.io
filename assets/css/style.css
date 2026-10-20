@@ -859,26 +859,38 @@ a.proj:hover .proj-title svg { opacity: 1; transform: none; }
 .portrait::before {
   content: "";
   position: absolute;
-  inset: -10px 10px 10px -10px;
+  inset: -14px;
   border: 1px solid var(--line);
+  border-radius: 50%;
   pointer-events: none;
-  transition: inset .5s var(--ease), border-color .4s;
+  transition: inset .55s var(--ease), border-color .4s, border-style .3s;
 }
-.portrait:hover::before { inset: -6px 6px 6px -6px; border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+.portrait:hover::before {
+  inset: -9px;
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.portrait-img {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+}
 .portrait img {
   width: 100%;
-  aspect-ratio: 1;
+  height: 100%;
   object-fit: cover;
-  border-radius: 2px;
-  transition: transform .7s var(--ease), box-shadow .7s var(--ease);
+  transition: transform .8s var(--ease);
 }
-.portrait:hover img { transform: scale(1.015); }
+.portrait:hover img { transform: scale(1.04); }
 .portrait-cap {
   display: block;
-  margin-top: 14px;
+  margin-top: 36px;
   font-size: 9px;
   letter-spacing: .14em;
   text-transform: uppercase;
+  text-align: center;
   color: var(--text-3);
 }
 
