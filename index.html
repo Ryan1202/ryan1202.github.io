@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jiajun Wang — Systems Programmer</title>
+  <meta name="description" content="Jiajun Wang (Ryan1202) — computer science student at XJTLU building Horizon, an x86_64 operating system in C and Rust." />
+  <meta name="author" content="Jiajun Wang" />
+
+  <meta property="og:title" content="Jiajun Wang — Systems Programmer" />
+  <meta property="og:description" content="I build the layer beneath the software: an x86_64 operating system in C and Rust." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ryan1202.github.io/" />
+  <meta property="og:image" content="https://ryan1202.github.io/assets/img/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://ryan1202.github.io/assets/img/og.png" />
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230b0b0d'/><text x='32' y='43' font-family='monospace' font-size='28' font-weight='bold' text-anchor='middle' fill='%23ff5c35'>JW</text></svg>" />
+
+  <link rel="preload" href="assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin />
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('jw-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* storage unavailable */ }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <a class="skip" href="#work">Skip to work</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- ============ Header ============ -->
+  <header class="head" id="head">
+    <div class="wrap head-inner">
+      <a class="brand" href="#top" aria-label="Jiajun Wang, back to top">
+        <span class="brand-mark">JW</span>
+        <span class="brand-name">Jiajun&nbsp;Wang</span>
+      </a>
+
+      <nav class="nav" aria-label="Sections">
+        <a href="#work">Work</a>
+        <a href="#stack">Stack</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <button class="theme" id="theme" type="button" aria-label="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.6M12 19v2.6M2.4 12H5M19 12h2.6M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.2A8.6 8.6 0 1 1 10.8 3.4a6.8 6.8 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ============ Hero ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="kicker reveal-load">
+            <span class="dot" aria-hidden="true"></span>
+            Suzhou, China
+            <span class="sep">/</span>
+            <span class="mono">31.30°N 120.60°E</span>
+          </p>
+
+          <h1 id="hero-title" class="hero-title">
+            <span class="line"><span>Jiajun</span></span>
+            <span class="line outline"><span>Wang</span></span>
+          </h1>
+
+          <p class="lede reveal-load">
+            Computer science student at XJTLU. I build the layer beneath the
+            software — an x86_64 operating system in C and Rust, and the tools
+            around it.
+          </p>
+
+          <div class="hero-cta reveal-load">
+            <a class="btn btn-solid" href="#work">
+              Selected work
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg>
+            </a>
+            <a class="btn btn-line" href="https://github.com/Ryan1202" target="_blank" rel="noopener">
+              GitHub
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <aside class="terminal" aria-label="A short terminal session">
+          <div class="term-bar">
+            <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="term-title">jiajun@horizon — zsh</span>
+            <span class="term-badge">x86_64</span>
+          </div>
+          <div class="term-body" id="termBody">
+            <div class="term-line cmd" data-line>&nbsp;% whoami</div>
+            <div class="term-line out" data-line>jiajun — CS student, kernel developer</div>
+            <div class="term-line cmd" data-line>&nbsp;% uname -a</div>
+            <div class="term-line out" data-line>Horizon 0.1.0 x86_64 <em>C / Rust</em></div>
+            <div class="term-line cmd" data-line>&nbsp;% ls src</div>
+            <div class="term-line out" data-line>arch  driver  fs  kernel  lib  objects</div>
+            <div class="term-line cmd" data-line>&nbsp;% git log -1 --oneline</div>
+            <div class="term-line out" data-line>0b950fe doc: 新增 Affinity 笔记</div>
+            <div class="term-line cmd" data-line>&nbsp;% <span class="caret" aria-hidden="true"></span></div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="hero-foot">
+        <div class="wrap hero-foot-inner">
+          <span class="scroll-cue" aria-hidden="true">
+            <svg viewBox="0 0 12 24"><path d="M6 1v20M1 16l5 5 5-5"/></svg>
+            scroll
+          </span>
+          <div class="ticker" aria-hidden="true">
+            <div class="ticker-track">
+              <span>C</span><i>◆</i><span>Rust</span><i>◆</i><span>x86_64 assembly</span><i>◆</i>
+              <span>GRUB2</span><i>◆</i><span>QEMU</span><i>◆</i><span>GDB</span><i>◆</i>
+              <span>Linux</span><i>◆</i><span>SwiftUI</span><i>◆</i><span>Kotlin</span><i>◆</i>
+              <span>C</span><i>◆</i><span>Rust</span><i>◆</i><span>x86_64 assembly</span><i>◆</i>
+              <span>GRUB2</span><i>◆</i><span>QEMU</span><i>◆</i><span>GDB</span><i>◆</i>
+              <span>Linux</span><i>◆</i><span>SwiftUI</span><i>◆</i><span>Kotlin</span><i>◆</i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Work ============ -->
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="sec-num">01</span>
+          <h2 class="sec-title" id="work-title">Selected work</h2>
+          <span class="sec-note">08 projects · 2021&ndash;2026</span>
+        </div>
+
+        <!-- Featured project -->
+        <article class="feature reveal">
+          <div class="feature-main">
+            <p class="tag-line">Featured — operating system</p>
+            <h3>Horizon</h3>
+            <p class="feature-desc">
+              An experimental x86_64 operating system, written in C and Rust.
+              Higher-half kernel, buddy allocator and SLUB, kernel threads,
+              per-CPU data, interrupt handling, and a set of drivers — all
+              booting from GRUB2 and running in QEMU.
+            </p>
+            <p class="feature-desc dim">
+              Started in 2021 as a 32-bit toy kernel. Now migrating its core
+              subsystems to Rust, one module at a time.
+            </p>
+            <div class="feature-actions">
+              <a class="btn btn-solid" href="https://github.com/Ryan1202/Horizon-Operating-System" target="_blank" rel="noopener">
+                View source
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg>
+              </a>
+              <span class="btn-note">MIT licensed · open source</span>
+            </div>
+          </div>
+
+          <div class="feature-spec">
+            <dl class="spec">
+              <div><dt>Architecture</dt><dd>x86_64 · higher-half</dd></div>
+              <div><dt>Languages</dt><dd>C · Rust <span class="faint">153 .rs / 130 .c</span></dd></div>
+              <div><dt>Boot</dt><dd>GRUB2 · Multiboot2</dd></div>
+              <div><dt>Runs on</dt><dd>QEMU · x86_64 hardware</dd></div>
+            </dl>
+
+            <ul class="subsystems" aria-label="Subsystem status">
+              <li><span>Memory</span><em>buddy · SLUB · vmalloc</em><i class="ok">shipped</i></li>
+              <li><span>Scheduling</span><em>threads · wait queue</em><i class="wip">evolving</i></li>
+              <li><span>Interrupts</span><em>APIC · IRQ affinity</em><i class="wip">evolving</i></li>
+              <li><span>Drivers</span><em>ATA · UHCI · RTL8139 · SB16</em><i class="ok">shipped</i></li>
+              <li><span>Network</span><em>IPv4 · ARP · TCP</em><i class="exp">experimental</i></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Project list -->
+        <ul class="projects">
+          <li class="reveal">
+            <a class="proj" href="https://github.com/Ryan1202/myrbtree" target="_blank" rel="noopener">
+              <span class="proj-idx">02</span>
+              <span class="proj-body">
+                <span class="proj-title">myrbtree <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                <span class="proj-desc">A red-black tree in Rust, derived from 2-3-4 tree intuition rather than memorised rules — with every fix-up case explained.</span>
+              </span>
+              <span class="proj-meta"><span class="chip">Rust</span><span class="year">2025</span></span>
+            </a>
+          </li>
+
+          <li class="reveal">
+            <a class="proj" href="https://github.com/Ryan1202/tiny_mp3_player" target="_blank" rel="noopener">
+              <span class="proj-idx">03</span>
+              <span class="proj-body">
+                <span class="proj-title">tiny_mp3_player <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                <span class="proj-desc">An MP3 decoder written from the specification, mono only, with per-frame debug output and a WAV comparison script.</span>
+              </span>
+              <span class="proj-meta"><span class="chip">Rust</span><span class="year">2024</span></span>
+            </a>
+          </li>
+
+          <li class="reveal">
+            <a class="proj" href="https://github.com/Ryan1202/my-tiny-jpeg-viewer" target="_blank" rel="noopener">
+              <span class="proj-idx">04</span>
+              <span class="proj-body">
+                <span class="proj-title">my-tiny-jpeg-viewer <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                <span class="proj-desc">A JPEG viewer that decodes the format itself — Huffman tables, DCT and all — instead of leaning on an image crate.</span>
+              </span>
+              <span class="proj-meta"><span class="chip">Rust</span><span class="year">2024</span></span>
+            </a>
+          </li>
+
+          <li class="reveal">
+            <a class="proj" href="https://github.com/Ryan1202/imagetool" target="_blank" rel="noopener">
+              <span class="proj-idx">05</span>
+              <span class="proj-body">
+                <span class="proj-title">imagetool <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                <span class="proj-desc">A disk-image editor: new, mkdir, copy, delete — the tool that puts files into Horizon's boot disk.</span>
+              </span>
+              <span class="proj-meta"><span class="chip">Rust</span><span class="year">2023</span></span>
+            </a>
+          </li>
+
+          <li class="reveal">
+            <div class="proj proj-static">
+              <span class="proj-idx">06</span>
+              <span class="proj-body">
+                <span class="proj-title">Paging Viewer <span class="chip chip-local">local</span></span>
+                <span class="proj-desc">A Tauri desktop tool that takes a virtual address apart — page indices, offsets, bit layout — for x86-64 and custom paging presets.</span>
+              </span>
+              <span class="proj-meta"><span class="chip">React · Rust</span><span class="year">2026</span></span>
+            </div>
+          </li>
+
+          <li class="reveal">
+            <a class="proj" href="https://github.com/Ryan1202/HuiHuTong" target="_blank" rel="noopener">
+              <span class="proj-idx">07</span>
+              <span class="proj-body">
+                <span class="proj-title">HuiHuTong <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                <span class="proj-desc">An Android utility that turns the screen up to full brightness the moment the campus gate QR code appears.</span>
+              </span>
+              <span class="proj-meta"><span class="chip">Kotlin</span><span class="year">2025</span></span>
+            </a>
+          </li>
+
+          <li class="reveal">
+            <div class="proj proj-static">
+              <span class="proj-idx">08</span>
+              <span class="proj-body">
+                <span class="proj-title">Synesthesia Beacon <span class="chip chip-local">private</span></span>
+                <span class="proj-desc">A native macOS proxy client in SwiftUI, built on the mihomo core — an exercise in writing software that feels like the platform it runs on.</span>
+              </span>
+              <span class="proj-meta"><span class="chip">Swift</span><span class="year">2026</span></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ Stack ============ -->
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="sec-num">02</span>
+          <h2 class="sec-title" id="stack-title">The stack, top to bottom</h2>
+          <span class="sec-note">What I actually touch</span>
+        </div>
+
+        <p class="sec-intro reveal">
+          Most people meet a computer at the top. I spend my time at the bottom,
+          where the abstractions stop — and then work my way up until something
+          useful appears.
+        </p>
+
+        <ol class="layers">
+          <li class="layer reveal">
+            <span class="layer-idx">05</span>
+            <span class="layer-name">Userspace</span>
+            <span class="layer-desc">Small tools that make the machine legible.</span>
+            <span class="layer-tags">Tauri · React · SwiftUI · Kotlin</span>
+          </li>
+          <li class="layer reveal">
+            <span class="layer-idx">04</span>
+            <span class="layer-name">Kernel</span>
+            <span class="layer-desc">Threads, scheduling, sync primitives, per-CPU state.</span>
+            <span class="layer-tags">C · Rust · x86_64</span>
+          </li>
+          <li class="layer reveal">
+            <span class="layer-idx">03</span>
+            <span class="layer-name">Memory</span>
+            <span class="layer-desc">Paging, buddy allocator, SLUB, kmalloc, vmalloc, DMA.</span>
+            <span class="layer-tags">4-level paging · TLB</span>
+          </li>
+          <li class="layer reveal">
+            <span class="layer-idx">02</span>
+            <span class="layer-name">Drivers</span>
+            <span class="layer-desc">Talking to hardware that was never designed to be friendly.</span>
+            <span class="layer-tags">ATA · UHCI · RTL8139 · VESA · PS/2</span>
+          </li>
+          <li class="layer reveal">
+            <span class="layer-idx">01</span>
+            <span class="layer-name">Metal</span>
+            <span class="layer-desc">Where it all starts: a reset vector and a lot of hope.</span>
+            <span class="layer-tags">x86_64 · GRUB2 · Multiboot2 · QEMU</span>
+          </li>
+        </ol>
+
+        <div class="toolbox reveal">
+          <div class="tool-group">
+            <h3>Languages</h3>
+            <p>C · Rust · x86_64 assembly · TypeScript · Kotlin · Swift</p>
+          </div>
+          <div class="tool-group">
+            <h3>Low level</h3>
+            <p>GDB · QEMU · GRUB2 · Make · objdump · readelf · Wireshark</p>
+          </div>
+          <div class="tool-group">
+            <h3>Everyday</h3>
+            <p>Linux · Git · Make · Cargo · Python · React · Tauri</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ About ============ -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="sec-num">03</span>
+          <h2 class="sec-title" id="about-title">About</h2>
+          <span class="sec-note">Jiajun Wang · Ryan1202</span>
+        </div>
+
+        <div class="about-grid">
+          <div class="portrait reveal">
+            <img src="assets/img/avatar.jpg" alt="Portrait of Jiajun Wang" width="320" height="320" loading="lazy" />
+            <span class="portrait-cap mono">Ryan1202 · Suzhou</span>
+          </div>
+
+          <div class="about-copy">
+            <p class="reveal lead">
+              I'm Jiajun — Ryan to most people — a computer science student at
+              Xi'an Jiaotong-Liverpool University.
+            </p>
+            <p class="reveal">
+              Most of what I do happens below the application layer: page tables,
+              interrupt controllers, schedulers, and the bugs that only appear
+              when you boot your own code. Horizon started in 2021 as a 32-bit
+              toy kernel; it is now a higher-half x86_64 kernel that boots from
+              GRUB2 under QEMU, and it is slowly being rewritten in Rust module
+              by module.
+            </p>
+            <p class="reveal">
+              When I'm not in QEMU I write small tools to understand formats and
+              machines from first principles — a JPEG decoder, an MP3 decoder, a
+              red-black tree derived from 2-3-4 trees, a FAT image editor, a
+              paging visualiser. Different layers, same question: how does this
+              actually work?
+            </p>
+
+            <dl class="facts reveal">
+              <div><dt>Based</dt><dd>Suzhou, China</dd></div>
+              <div><dt>Studying</dt><dd>BSc Computer Science, XJTLU</dd></div>
+              <div><dt>Focus</dt><dd>Kernels · memory · drivers</dd></div>
+              <div><dt>Currently</dt><dd>Porting Horizon to Rust</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="now reveal">
+          <h3 class="now-title"><span class="dot" aria-hidden="true"></span> Now</h3>
+          <ul class="now-list">
+            <li><span class="mono">Oct 2026</span> Reworking APIC and IRQ affinity in Horizon for multicore.</li>
+            <li><span class="mono">Oct 2026</span> Building Paging Viewer to make address translation visible.</li>
+            <li><span class="mono">2026</span> Mapping out ACPI support for Horizon, one table at a time.</li>
+            <li><span class="mono">2026</span> Writing a native macOS client in SwiftUI to learn a different kind of systems work.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Contact ============ -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="sec-num">04</span>
+          <h2 class="sec-title" id="contact-title">Say hello</h2>
+          <span class="sec-note">Open to interesting problems</span>
+        </div>
+
+        <p class="contact-lede reveal">
+          If you're into kernels, Rust, or just want to argue about page-table
+          layouts, the best place to find me is GitHub.
+        </p>
+
+        <a class="contact-link reveal" href="https://github.com/Ryan1202" target="_blank" rel="noopener">
+          <span>github.com/Ryan1202</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19L19 5M19 5H8M19 5v11"/></svg>
+        </a>
+
+        <div class="contact-meta reveal">
+          <span class="mono">SUZHOU · UTC+8</span>
+          <span class="mono">XJTLU · BSC COMPUTER SCIENCE</span>
+          <span class="mono">GITHUB.COM/RYAN1202</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>© <span id="year">2026</span> Jiajun Wang</span>
+      <span class="foot-mid">Hand-written HTML, CSS &amp; JavaScript · no trackers</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
