@@ -153,7 +153,7 @@
         <article class="feature reveal">
           <div class="feature-main">
             <p class="tag-line">Featured — operating system</p>
-            <h3>Horizon</h3>
+            <h3><a class="horizon-detail" href="horizon/" aria-label="Horizon development history">Horizon</a></h3>
             <p class="feature-desc">
               An experimental x86_64 operating system, written in C and Rust.
               Higher-half kernel, buddy allocator and SLUB, kernel threads,
@@ -177,24 +177,18 @@
             <dl class="spec">
               <div><dt>Architecture</dt><dd>x86_64 · higher-half</dd></div>
               <div><dt>Languages</dt><dd>C · Rust</dd></div>
-              <div><dt>Boot</dt><dd>GRUB2 · Multiboot2</dd></div>
+              <div><dt><a class="horizon-detail" href="horizon/boot.html">Boot</a></dt><dd>GRUB2 · Multiboot2</dd></div>
               <div><dt>Runs on</dt><dd>QEMU · x86_64 hardware</dd></div>
             </dl>
 
             <ul class="subsystems" aria-label="Subsystem status">
-              <li><span>Memory</span><em>buddy · SLUB · vmalloc</em><i class="ok">shipped</i></li>
-              <li><span>Scheduling</span><em>threads · wait queue</em><i class="wip">evolving</i></li>
-              <li><span>Interrupts</span><em>APIC · IRQ affinity</em><i class="wip">evolving</i></li>
+              <li><span><a class="horizon-detail" href="horizon/memory.html">Memory</a></span><em>buddy · SLUB · vmalloc</em><i class="ok">shipped</i></li>
+              <li><span><a class="horizon-detail" href="horizon/schedule.html">Scheduling</a></span><em>threads · wait queue</em><i class="wip">evolving</i></li>
+              <li><span><a class="horizon-detail" href="horizon/interrupts.html">Interrupts</a></span><em>APIC · IRQ affinity</em><i class="wip">evolving</i></li>
               <li><span>Drivers</span><em>ATA · UHCI · RTL8139 · SB16</em><i class="ok">shipped</i></li>
               <li><span>ACPI</span><em>RSDP · MADT · DSDT / AML</em><i class="wip">evolving</i></li>
               <li><span>Network</span><em>IPv4 · ARP · TCP</em><i class="exp">experimental</i></li>
             </ul>
-
-            <nav class="horizon-links" aria-label="Horizon pages">
-              <a href="horizon/">Development history</a>
-              <a href="horizon/memory.html">Boot &amp; memory</a>
-              <a href="horizon/interrupts.html">Scheduling &amp; interrupts</a>
-            </nav>
           </div>
         </article>
 

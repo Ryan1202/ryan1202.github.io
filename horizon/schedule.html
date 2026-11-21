@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Schedule · Horizon project | Jiajun Wang</title>
+  <meta name="description" content="How Horizon picks runnable kernel threads, switches contexts and wakes blocked threads." />
+  <meta name="author" content="Jiajun Wang" />
+
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230b0b0d'/><text x='32' y='43' font-family='monospace' font-size='28' font-weight='bold' text-anchor='middle' fill='%23ff5c35'>JW</text></svg>" />
+
+  <link rel="preload" href="../assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin />
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('jw-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* storage unavailable */ }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#milestones">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <header class="head" id="head">
+    <div class="wrap head-inner">
+      <a class="brand" href="../index.html" aria-label="Jiajun Wang, home">
+        <span class="brand-mark">JW</span>
+        <span class="brand-name">Jiajun&nbsp;Wang</span>
+      </a>
+
+      <nav class="nav" aria-label="Site">
+        <a href="../index.html#work">Work</a>
+        <a href="../index.html#stack">Stack</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="../horizon/" class="active">Horizon</a>
+      </nav>
+
+      <button class="theme" id="theme" type="button" aria-label="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.6M12 19v2.6M2.4 12H5M19 12h2.6M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.2A8.6 8.6 0 1 1 10.8 3.4a6.8 6.8 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="horizon" id="top">
+    <section class="hero">
+      <div class="wrap">
+        <nav class="horizon-links" aria-label="Horizon pages">
+          <a href="index.html">Development history</a>
+          <a href="boot.html">Boot</a>
+          <a href="memory.html">Memory</a>
+          <a href="schedule.html" aria-current="page">Schedule</a>
+          <a href="interrupts.html">IRQ</a>
+        </nav>
+        <p class="tag-line">Kernel design</p>
+        <h1 class="hero-title">Schedule</h1>
+        <p class="lede">How Horizon picks runnable kernel threads, switches contexts and wakes blocked threads.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="https://github.com/Ryan1202/Horizon-Operating-System">View source</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="milestones" aria-label="Subsystem details">
+      <div class="wrap">
+        <section aria-label="Threads, waits and context switches">
+          <div class="sec-head">
+            <span class="sec-num">Jul 2026</span>
+            <h2 class="sec-title">Threads, waits and context switches</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The thread rewrite moved scheduling and yield logic into Rust. Wait queues give blocked threads a place to sleep until they can be woken. A thread that exits is cleaned up after the switch, when another thread is running.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/5048b05">Schedule and yield rewrite</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/thread/3-scheduler.md">Scheduler notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/thread/4-wait-queue.md">Wait queue notes</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Waking a thread during a switch">
+          <div class="sec-head">
+            <span class="sec-num">Wakeup</span>
+            <h2 class="sec-title">Waking a thread during a switch</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">A wakeup can arrive while a blocked thread is still switching away. The wait queue marks it as waking. If it is still on a CPU, switch cleanup restores it to the run queue after the switch. Otherwise the waking code can queue it directly.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/thread/4-wait-queue.md">Wait queue design</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>© <span id="year">2026</span> Jiajun Wang</span>
+      <span class="foot-mid">Hand-written HTML, CSS &amp; JavaScript · no trackers</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

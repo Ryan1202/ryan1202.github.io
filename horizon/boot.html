@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boot · Horizon project | Jiajun Wang</title>
+  <meta name="description" content="How Horizon starts from GRUB, enters x86_64 long mode and reaches the higher-half kernel." />
+  <meta name="author" content="Jiajun Wang" />
+
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230b0b0d'/><text x='32' y='43' font-family='monospace' font-size='28' font-weight='bold' text-anchor='middle' fill='%23ff5c35'>JW</text></svg>" />
+
+  <link rel="preload" href="../assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin />
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('jw-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* storage unavailable */ }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#milestones">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <header class="head" id="head">
+    <div class="wrap head-inner">
+      <a class="brand" href="../index.html" aria-label="Jiajun Wang, home">
+        <span class="brand-mark">JW</span>
+        <span class="brand-name">Jiajun&nbsp;Wang</span>
+      </a>
+
+      <nav class="nav" aria-label="Site">
+        <a href="../index.html#work">Work</a>
+        <a href="../index.html#stack">Stack</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="../horizon/" class="active">Horizon</a>
+      </nav>
+
+      <button class="theme" id="theme" type="button" aria-label="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.6M12 19v2.6M2.4 12H5M19 12h2.6M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.2A8.6 8.6 0 1 1 10.8 3.4a6.8 6.8 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="horizon" id="top">
+    <section class="hero">
+      <div class="wrap">
+        <nav class="horizon-links" aria-label="Horizon pages">
+          <a href="index.html">Development history</a>
+          <a href="boot.html" aria-current="page">Boot</a>
+          <a href="memory.html">Memory</a>
+          <a href="schedule.html">Schedule</a>
+          <a href="interrupts.html">IRQ</a>
+        </nav>
+        <p class="tag-line">Kernel design</p>
+        <h1 class="hero-title">Boot</h1>
+        <p class="lede">How Horizon starts from GRUB, enters x86_64 long mode and reaches the higher-half kernel.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="https://github.com/Ryan1202/Horizon-Operating-System">View source</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="milestones" aria-label="Subsystem details">
+      <div class="wrap">
+        <section aria-label="From GRUB to the higher half">
+          <div class="sec-head">
+            <span class="sec-num">Boot</span>
+            <h2 class="sec-title">From GRUB to the higher half</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">GRUB hands boot information to Horizon through Multiboot2. The transition to long mode sets up the initial page tables, and early memory setup uses the boot memory map to distinguish usable physical ranges from reserved ones.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/01-multiboot2.md">Multiboot2 notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/10-road_to_64.md">Road to 64-bit</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Reading the boot memory map">
+          <div class="sec-head">
+            <span class="sec-num">Early init</span>
+            <h2 class="sec-title">Reading the boot memory map</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">Early initialization reads the bootloader’s memory map to find usable physical ranges. It reserves the ranges occupied by the kernel and boot information before handing memory to the allocator.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/memory/04-early.md">Early memory setup notes</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>© <span id="year">2026</span> Jiajun Wang</span>
+      <span class="foot-mid">Hand-written HTML, CSS &amp; JavaScript · no trackers</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

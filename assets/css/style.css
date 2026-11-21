@@ -1213,12 +1213,14 @@ a.proj:hover .proj-title svg { opacity: 1; transform: none; }
 #horizon-commit { overflow-wrap: anywhere; }
 
 .horizon-links a,
+.horizon-detail,
 #horizon-commit,
 .now-list a {
   text-decoration: underline;
   text-underline-offset: .25em;
 }
 
+.horizon-detail:hover,
 .horizon-links a:hover,
 .horizon-links a[aria-current="page"],
 #horizon-commit:hover,
