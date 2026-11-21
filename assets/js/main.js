@@ -122,12 +122,20 @@
       return {
         group: group,
         link: group.querySelector('.nav-root'),
-        panel: group.querySelector('.nav-submenu')
+        panel: group.querySelector('.nav-submenu'),
+        links: group.querySelector('.nav-links')
       };
     });
 
     function isOpen(menu) {
       return menu.link.getAttribute('aria-expanded') === 'true';
+    }
+
+    var currentMenu = menus.find(isOpen);
+
+    function measureMenu(menu) {
+      var width = menu.links.getBoundingClientRect().width;
+      menu.panel.style.setProperty('--submenu-width', width + 'px');
     }
 
     function openMenu(selected) {
@@ -159,10 +167,22 @@
       });
 
       menu.panel.addEventListener('transitionend', function (event) {
-        if (event.propertyName === 'grid-template-columns') revealMenu(menu);
+        if (event.propertyName === 'width') revealMenu(menu);
       });
 
+      measureMenu(menu);
       revealMenu(menu);
+    });
+
+    var menuSize = new ResizeObserver(function () {
+      menus.forEach(measureMenu);
+    });
+    menus.forEach(function (menu) { menuSize.observe(menu.links); });
+    nav.classList.add('is-ready');
+
+    nav.addEventListener('pointerleave', function (event) {
+      if (event.pointerType === 'mouse' && !nav.contains(document.activeElement) &&
+          menus.some(isOpen)) openMenu(currentMenu);
     });
 
     nav.addEventListener('keydown', function (event) {
