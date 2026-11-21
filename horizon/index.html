@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="history-page">
   <a class="skip" href="#milestones">Skip to content</a>
   <div class="progress" id="progress" aria-hidden="true"></div>
   <header class="head" id="head">
@@ -72,6 +72,95 @@
   </header>
 
   <main class="horizon" id="top">
+    <nav class="history-timeline" aria-label="Timeline">
+      <ol class="history-rail">
+        <li class="history-year">
+          <a href="#learning-from-a-working-system">2016</a>
+          <div class="history-months">
+            <ol>
+              <li><a href="#learning-from-a-working-system" aria-label="August 2016"><time datetime="2016-08">Aug</time></a></li>
+            </ol>
+          </div>
+        </li>
+        <li class="history-year">
+          <a href="#the-first-32-bit-kernel">2020</a>
+          <div class="history-months">
+            <ol>
+              <li><a href="#the-first-32-bit-kernel" aria-label="January 2020"><time datetime="2020-01">Jan</time></a></li>
+            </ol>
+          </div>
+        </li>
+        <li class="history-year">
+          <a href="#horizon-arrives-on-github">2021</a>
+          <div class="history-months">
+            <ol>
+              <li><a href="#horizon-arrives-on-github" aria-label="July 2021"><time datetime="2021-07">Jul</time></a></li>
+              <li><a href="#a-virtual-filesystem" aria-label="August 2021"><time datetime="2021-08">Aug</time></a></li>
+              <li><a href="#user-threads-and-system-calls" aria-label="September 2021"><time datetime="2021-09">Sep</time></a></li>
+            </ol>
+          </div>
+        </li>
+        <li class="history-year">
+          <a href="#programs-loaded-from-disk">2022</a>
+          <div class="history-months">
+            <ol>
+              <li><a href="#programs-loaded-from-disk" aria-label="July 2022"><time datetime="2022-07">Jul</time></a></li>
+              <li><a href="#sound-blaster-support" aria-label="August 2022"><time datetime="2022-08">Aug</time></a></li>
+              <li><a href="#finding-usb-hardware" aria-label="September 2022"><time datetime="2022-09">Sep</time></a></li>
+              <li><a href="#automated-builds-and-local-tools" aria-label="November 2022"><time datetime="2022-11">Nov</time></a></li>
+            </ol>
+          </div>
+        </li>
+        <li class="history-year">
+          <a href="#faster-and-more-reliable-fat32-reads">2023</a>
+          <div class="history-months">
+            <ol>
+              <li><a href="#faster-and-more-reliable-fat32-reads" aria-label="January 2023"><time datetime="2023-01">Jan</time></a></li>
+            </ol>
+          </div>
+        </li>
+        <li class="history-year">
+          <a href="#revisiting-tcp-and-rtl8139">2024</a>
+          <div class="history-months">
+            <ol>
+              <li><a href="#revisiting-tcp-and-rtl8139" aria-label="February 2024"><time datetime="2024-02">Feb</time></a></li>
+              <li><a href="#keyboard-and-usb-initialization" aria-label="August 2024"><time datetime="2024-08">Aug</time></a></li>
+              <li><a href="#booting-from-grub" aria-label="November 2024"><time datetime="2024-11">Nov</time></a></li>
+              <li><a href="#a-framework-for-buses-and-devices" aria-label="December 2024"><time datetime="2024-12">Dec</time></a></li>
+            </ol>
+          </div>
+        </li>
+        <li class="history-year">
+          <a href="#from-disk-requests-to-filesystem-objects">2025</a>
+          <div class="history-months">
+            <ol>
+              <li><a href="#from-disk-requests-to-filesystem-objects" aria-label="January 2025"><time datetime="2025-01">Jan</time></a></li>
+              <li><a href="#emulating-real-mode-bios-calls" aria-label="April 2025"><time datetime="2025-04">Apr</time></a></li>
+              <li><a href="#driver-readiness-and-lock-diagnostics" aria-label="May 2025"><time datetime="2025-05">May</time></a></li>
+              <li><a href="#deferred-interrupts-and-preemption" aria-label="August 2025"><time datetime="2025-08">Aug</time></a></li>
+              <li><a href="#usb-and-legacy-input" aria-label="September 2025"><time datetime="2025-09">Sep</time></a></li>
+              <li><a href="#bringing-rust-into-the-build" aria-label="October 2025"><time datetime="2025-10">Oct</time></a></li>
+            </ol>
+          </div>
+        </li>
+        <li class="history-year">
+          <a href="#merging-the-driver-framework-rework">2026</a>
+          <div class="history-months">
+            <ol>
+              <li><a href="#merging-the-driver-framework-rework" aria-label="January 2026"><time datetime="2026-01">Jan</time></a></li>
+              <li><a href="#moving-to-x86-64" aria-label="April 2026"><time datetime="2026-04">Apr</time></a></li>
+              <li><a href="#a-dma-layer-for-device-buffers" aria-label="June 2026"><time datetime="2026-06">Jun</time></a></li>
+              <li><a href="#thread-lifetimes-and-per-cpu-state" aria-label="July 2026"><time datetime="2026-07">Jul</time></a></li>
+              <li><a href="#reading-acpi-and-running-aml" aria-label="August 2026"><time datetime="2026-08">Aug</time></a></li>
+              <li><a href="#irq-routing-and-cpu-affinity" aria-label="September 2026"><time datetime="2026-09">Sep</time></a></li>
+              <li><a href="#updating-the-x86-64-build-workflow" aria-label="October 2026"><time datetime="2026-10">Oct</time></a></li>
+              <li><a href="#a-common-interface-for-timer-interrupts" aria-label="November 2026"><time datetime="2026-11">Nov</time></a></li>
+            </ol>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
     <section class="hero">
       <div class="wrap">
         <p class="tag-line reveal-load">Development history</p>
@@ -85,7 +174,7 @@
 
     <section class="section" id="milestones" aria-label="Milestones">
       <div class="wrap">
-        <section class="reveal">
+        <section class="reveal" id="learning-from-a-working-system">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2016-08">Aug 2016</time> - <time datetime="2020-01">Jan 2020</time></span>
             <h2 class="sec-title">Learning from a working system</h2>
@@ -95,7 +184,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="the-first-32-bit-kernel">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2020-01">Jan</time>–<time datetime="2020-12">Dec 2020</time></span>
             <h2 class="sec-title">The first 32-bit kernel</h2>
@@ -106,7 +195,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="horizon-arrives-on-github">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2021-07">Jul 2021</time></span>
             <h2 class="sec-title">Horizon arrives on GitHub</h2>
@@ -121,7 +210,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="a-virtual-filesystem">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2021-08">Aug 2021</time></span>
             <h2 class="sec-title">A virtual filesystem</h2>
@@ -134,7 +223,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="user-threads-and-system-calls">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2021-09">Sep 2021</time></span>
             <h2 class="sec-title">User threads and system calls</h2>
@@ -148,7 +237,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="programs-loaded-from-disk">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2022-07">Jul 2022</time></span>
             <h2 class="sec-title">Programs loaded from disk</h2>
@@ -162,7 +251,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="sound-blaster-support">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2022-08">Aug 2022</time></span>
             <h2 class="sec-title">Sound Blaster support</h2>
@@ -175,7 +264,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="finding-usb-hardware">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2022-09">Sep</time>–<time datetime="2022-10">Oct 2022</time></span>
             <h2 class="sec-title">Finding USB hardware</h2>
@@ -190,7 +279,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="automated-builds-and-local-tools">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2022-11">Nov</time>–<time datetime="2022-12">Dec 2022</time></span>
             <h2 class="sec-title">Automated builds and local tools</h2>
@@ -205,7 +294,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="faster-and-more-reliable-fat32-reads">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2023-01">Jan 2023</time></span>
             <h2 class="sec-title">Faster and more reliable FAT32 reads</h2>
@@ -219,7 +308,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="building-the-first-network-stack">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2023-01">Jan</time>–<time datetime="2023-04">Apr 2023</time></span>
             <h2 class="sec-title">Building the first network stack</h2>
@@ -238,7 +327,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="revisiting-tcp-and-rtl8139">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2024-02">Feb 2024</time></span>
             <h2 class="sec-title">Revisiting TCP and RTL8139</h2>
@@ -251,7 +340,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="keyboard-and-usb-initialization">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2024-08">Aug</time> &amp; <time datetime="2024-10">Oct 2024</time></span>
             <h2 class="sec-title">Keyboard and USB initialization</h2>
@@ -267,7 +356,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="booting-from-grub">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2024-11">Nov 2024</time></span>
             <h2 class="sec-title">Booting from GRUB</h2>
@@ -281,7 +370,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="a-framework-for-buses-and-devices">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2024-12">Dec 2024</time></span>
             <h2 class="sec-title">A framework for buses and devices</h2>
@@ -296,7 +385,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="from-disk-requests-to-filesystem-objects">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2025-01">Jan</time>–<time datetime="2025-03">Mar 2025</time></span>
             <h2 class="sec-title">From disk requests to filesystem objects</h2>
@@ -316,7 +405,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="emulating-real-mode-bios-calls">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2025-04">Apr 2025</time></span>
             <h2 class="sec-title">Emulating real-mode BIOS calls</h2>
@@ -330,7 +419,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="driver-readiness-and-lock-diagnostics">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2025-05">May 2025</time></span>
             <h2 class="sec-title">Driver readiness and lock diagnostics</h2>
@@ -344,7 +433,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="deferred-interrupts-and-preemption">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2025-08">Aug 2025</time></span>
             <h2 class="sec-title">Deferred interrupts and preemption</h2>
@@ -359,7 +448,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="reworking-the-network-stack">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2025-08">Aug</time>–<time datetime="2025-09">Sep 2025</time></span>
             <h2 class="sec-title">Reworking the network stack</h2>
@@ -378,7 +467,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="usb-and-legacy-input">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2025-09">Sep</time>–<time datetime="2025-10">Oct 2025</time></span>
             <h2 class="sec-title">USB and legacy input</h2>
@@ -395,7 +484,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="bringing-rust-into-the-build">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2025-10">Oct 2025</time></span>
             <h2 class="sec-title">Bringing Rust into the build</h2>
@@ -409,7 +498,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="redesigning-page-tables-and-memory-allocation">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2025-10">Oct 2025</time>–<time datetime="2026-03">Mar 2026</time></span>
             <h2 class="sec-title">Redesigning page tables and memory allocation</h2>
@@ -424,7 +513,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="merging-the-driver-framework-rework">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2026-01">Jan 2026</time></span>
             <h2 class="sec-title">Merging the driver framework rework</h2>
@@ -437,7 +526,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="moving-to-x86-64">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2026-04">Apr 2026</time></span>
             <h2 class="sec-title">Moving to x86_64</h2>
@@ -452,7 +541,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="a-dma-layer-for-device-buffers">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2026-06">Jun 2026</time></span>
             <h2 class="sec-title">A DMA layer for device buffers</h2>
@@ -466,7 +555,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="thread-lifetimes-and-per-cpu-state">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2026-07">Jul</time>–<time datetime="2026-08">Aug 2026</time></span>
             <h2 class="sec-title">Thread lifetimes and per-CPU state</h2>
@@ -484,7 +573,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="reading-acpi-and-running-aml">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2026-08">Aug</time>–<time datetime="2026-09">Sep 2026</time></span>
             <h2 class="sec-title">Reading ACPI and running AML</h2>
@@ -502,7 +591,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="irq-routing-and-cpu-affinity">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2026-09">Sep 2026</time></span>
             <h2 class="sec-title">IRQ routing and CPU affinity</h2>
@@ -518,7 +607,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="updating-the-x86-64-build-workflow">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2026-10">Oct 2026</time></span>
             <h2 class="sec-title">Updating the x86_64 build workflow</h2>
@@ -532,7 +621,7 @@
           </div>
         </section>
 
-        <section class="reveal">
+        <section class="reveal" id="a-common-interface-for-timer-interrupts">
           <div class="sec-head">
             <span class="sec-num"><time datetime="2026-11">Nov 2026</time></span>
             <h2 class="sec-title">A common interface for timer interrupts</h2>

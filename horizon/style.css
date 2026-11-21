@@ -36,3 +36,119 @@
 .horizon .feature-desc + .feature-desc {
   margin-top: 12px;
 }
+
+.history-page {
+  --history-rail-width: 4rem;
+  --history-rail-edge: clamp(8px, 2vw, 24px);
+}
+
+.history-page .wrap:not(.head-inner) {
+  padding-inline-end: max(var(--pad), calc(
+    var(--history-rail-width) + var(--history-rail-edge) * 2 -
+    max(0px, (100vw - var(--wrap)) / 2)
+  ));
+}
+
+.history-timeline {
+  position: fixed;
+  z-index: 10;
+  inset-block-start: calc(var(--head-h) + 20px);
+  inset-inline-end: var(--history-rail-edge);
+  width: var(--history-rail-width);
+  font: 11px/1.4 var(--mono);
+}
+
+.history-rail {
+  max-height: calc(100svh - var(--head-h) - 40px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  padding-inline-start: 4px;
+}
+
+.history-rail:hover {
+  scrollbar-color: color-mix(in srgb, var(--text-3) 60%, transparent) transparent;
+}
+
+.history-year {
+  padding-block-end: 12px;
+}
+
+.history-year > a {
+  display: block;
+  padding-block: 2px;
+  color: var(--text-2);
+}
+
+.history-year > a:hover,
+.history-year:has(a[aria-current]) > a {
+  color: var(--text);
+}
+
+.history-months {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+.history-rail.is-ready .history-months {
+  transition: grid-template-rows .32s var(--ease), opacity .25s ease, visibility .32s;
+}
+
+.history-rail:has(a[aria-current]) .history-year:not(:has(a[aria-current])) .history-months {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.history-months ol {
+  min-height: 0;
+  overflow: hidden;
+  padding-inline-start: 4px;
+}
+
+.history-months li:first-child {
+  padding-block-start: 4px;
+}
+
+.history-year ol a {
+  position: relative;
+  display: block;
+  padding: 4px 9px;
+  border-inline-start: 1px solid var(--line);
+  color: var(--text-3);
+}
+
+.history-year ol a::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: -4px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--text-3);
+  border-radius: 50%;
+  background: var(--bg);
+  transform: translateY(-50%);
+}
+
+.history-year ol a:hover,
+.history-year ol a[aria-current] {
+  color: var(--accent);
+}
+
+.history-year ol a[aria-current]::before {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.history-rail a:focus-visible { outline-offset: -2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .history-rail.is-ready .history-months { transition: none; }
+}
+
+@media (max-width: 560px) {
+  .history-page { --history-rail-width: 3.25rem; }
+}

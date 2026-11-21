@@ -37,6 +37,36 @@
   var progress = document.getElementById('progress');
   var ticking = false;
 
+  var historyRail = document.querySelector('.history-rail');
+  var historyItems = historyRail && Array.from(historyRail.querySelectorAll('.history-year ol a'), function (link) {
+    return { link: link, section: document.getElementById(link.hash.slice(1)) };
+  });
+  var activeHistoryItem;
+
+  function updateHistory(atBottom) {
+    var active = historyItems[0];
+    var readingLine = head.offsetHeight + 56;
+    for (var i = 1; i < historyItems.length; i++) {
+      var item = historyItems[i];
+      if (!atBottom && item.section.getBoundingClientRect().top > readingLine) break;
+      active = item;
+    }
+
+    if (active === activeHistoryItem) return;
+    if (activeHistoryItem) activeHistoryItem.link.removeAttribute('aria-current');
+    active.link.setAttribute('aria-current', 'location');
+    activeHistoryItem = active;
+    followHistoryItem();
+  }
+
+  function followHistoryItem() {
+    if (historyRail.contains(document.activeElement)) return;
+    var rail = historyRail.getBoundingClientRect();
+    var link = activeHistoryItem.link.getBoundingClientRect();
+    if (link.top < rail.top) historyRail.scrollTop += link.top - rail.top;
+    else if (link.bottom > rail.bottom) historyRail.scrollTop += link.bottom - rail.bottom;
+  }
+
   function onScroll() {
     var y = window.scrollY || window.pageYOffset;
     var max = document.documentElement.scrollHeight - window.innerHeight;
@@ -46,6 +76,7 @@
       var ratio = max > 0 ? Math.min(y / max, 1) : 0;
       progress.style.transform = 'scaleX(' + ratio + ')';
     }
+    if (historyItems) updateHistory(max > 0 && y >= max - 1);
     ticking = false;
   }
 
@@ -56,6 +87,13 @@
     }
   }, { passive: true });
   onScroll();
+
+  if (historyRail) {
+    historyRail.classList.add('is-ready');
+    historyRail.addEventListener('transitionend', function (event) {
+      if (event.propertyName === 'grid-template-rows') followHistoryItem();
+    });
+  }
 
   /* ---------- terminal boot sequence ---------- */
   var termLines = Array.prototype.slice.call(document.querySelectorAll('[data-line]'));
