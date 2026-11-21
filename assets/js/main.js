@@ -115,6 +115,39 @@
     sections.forEach(function (section) { sectionObserver.observe(section); });
   }
 
+  /* ---------- top-level navigation menus ---------- */
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    var menus = nav.querySelectorAll('.nav-group');
+
+    Array.prototype.forEach.call(nav.children, function (item) {
+      item.addEventListener('pointerenter', function (event) {
+        if (event.pointerType !== 'mouse') return;
+
+        menus.forEach(function (menu) {
+          menu.open = menu === item;
+        });
+      });
+    });
+
+    nav.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape') return;
+
+      var menu = nav.querySelector('.nav-group[open]');
+      if (!menu) return;
+
+      event.preventDefault();
+      menu.open = false;
+      menu.querySelector('summary').focus();
+    });
+
+    document.addEventListener('pointerdown', function (event) {
+      if (nav.contains(event.target)) return;
+
+      menus.forEach(function (menu) { menu.open = false; });
+    });
+  }
+
   /* ---------- GitHub profile and Horizon activity ---------- */
   var avatar = document.getElementById('github-avatar');
   if (avatar) {

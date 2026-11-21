@@ -43,7 +43,16 @@
         <a href="../index.html#stack">Stack</a>
         <a href="../index.html#about">About</a>
         <a href="../index.html#contact">Contact</a>
-        <a href="../horizon/" class="active">Horizon</a>
+        <details class="nav-group" name="site-menu" open>
+          <summary>Horizon</summary>
+          <div class="nav-submenu">
+            <a href="index.html">History</a>
+            <a href="boot.html" aria-current="page">Boot</a>
+            <a href="memory.html">Memory</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="interrupts.html">IRQ</a>
+          </div>
+        </details>
       </nav>
 
       <button class="theme" id="theme" type="button" aria-label="Switch theme">
@@ -56,13 +65,6 @@
   <main class="horizon" id="top">
     <section class="hero">
       <div class="wrap">
-        <nav class="horizon-links" aria-label="Horizon pages">
-          <a href="index.html">History</a>
-          <a href="boot.html" aria-current="page">Boot</a>
-          <a href="memory.html">Memory</a>
-          <a href="schedule.html">Schedule</a>
-          <a href="interrupts.html">IRQ</a>
-        </nav>
         <p class="tag-line">Kernel design</p>
         <h1 class="hero-title">Boot</h1>
         <p class="lede">How Horizon starts from GRUB, enters x86_64 long mode and reaches the higher-half kernel.</p>
