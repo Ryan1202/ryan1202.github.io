@@ -118,46 +118,66 @@
   /* ---------- top-level navigation menus ---------- */
   var nav = document.querySelector('.nav');
   if (nav) {
-    var menus = nav.querySelectorAll('.nav-group');
-
-    Array.prototype.forEach.call(nav.children, function (item) {
-      item.addEventListener('pointerenter', function (event) {
-        if (event.pointerType !== 'mouse') return;
-
-        menus.forEach(function (menu) {
-          menu.open = menu === item;
-        });
-      });
+    var menus = Array.from(nav.querySelectorAll('.nav-group'), function (group) {
+      return {
+        group: group,
+        link: group.querySelector('.nav-root'),
+        panel: group.querySelector('.nav-submenu')
+      };
     });
 
-    function revealMenu(menu) {
-      if (!menu.open) return;
+    function isOpen(menu) {
+      return menu.link.getAttribute('aria-expanded') === 'true';
+    }
 
-      var submenu = menu.querySelector('.nav-submenu');
-      var overflow = submenu.getBoundingClientRect().right - nav.getBoundingClientRect().right;
-      if (overflow > 0) nav.scrollLeft += Math.ceil(overflow);
+    function openMenu(selected) {
+      menus.forEach(function (menu) {
+        var open = menu === selected;
+        menu.link.setAttribute('aria-expanded', String(open));
+        menu.panel.inert = !open;
+      });
+      if (selected && reduceMotion) revealMenu(selected);
+    }
+
+    function revealMenu(menu) {
+      if (!isOpen(menu)) return;
+
+      var bounds = nav.getBoundingClientRect();
+      var left = menu.group.getBoundingClientRect().left - bounds.left;
+      var right = menu.panel.getBoundingClientRect().right - bounds.right;
+      if (left < 0) nav.scrollLeft += Math.floor(left);
+      else if (right > 0) nav.scrollLeft += Math.ceil(right);
     }
 
     menus.forEach(function (menu) {
-      menu.addEventListener('toggle', function () { revealMenu(menu); });
+      menu.group.addEventListener('pointerenter', function (event) {
+        if (event.pointerType === 'mouse' && !isOpen(menu)) openMenu(menu);
+      });
+
+      menu.link.addEventListener('focus', function () {
+        if (!isOpen(menu)) openMenu(menu);
+      });
+
+      menu.panel.addEventListener('transitionend', function (event) {
+        if (event.propertyName === 'grid-template-columns') revealMenu(menu);
+      });
+
       revealMenu(menu);
     });
 
     nav.addEventListener('keydown', function (event) {
       if (event.key !== 'Escape') return;
 
-      var menu = nav.querySelector('.nav-group[open]');
+      var menu = menus.find(isOpen);
       if (!menu) return;
 
       event.preventDefault();
-      menu.open = false;
-      menu.querySelector('summary').focus();
+      menu.link.focus();
+      openMenu(null);
     });
 
     document.addEventListener('pointerdown', function (event) {
-      if (nav.contains(event.target)) return;
-
-      menus.forEach(function (menu) { menu.open = false; });
+      if (!nav.contains(event.target)) openMenu(null);
     });
   }
 

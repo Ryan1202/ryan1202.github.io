@@ -49,20 +49,29 @@
       </a>
 
       <nav class="nav" aria-label="Site">
-        <a href="#work">Work</a>
-        <a href="#stack">Stack</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <details class="nav-group" name="site-menu">
-          <summary>Horizon</summary>
-          <div class="nav-submenu">
-            <a href="horizon/index.html">History</a>
-            <a href="horizon/boot.html">Boot</a>
-            <a href="horizon/memory.html">Memory</a>
-            <a href="horizon/schedule.html">Schedule</a>
-            <a href="horizon/interrupts.html">IRQ</a>
+        <div class="nav-group">
+          <a class="nav-root" href="index.html" aria-current="page" aria-expanded="true" aria-controls="home-sections">Home</a>
+          <div class="nav-submenu" id="home-sections">
+            <div class="nav-links">
+              <a href="#work">Work</a>
+              <a href="#stack">Stack</a>
+              <a href="#about">About</a>
+              <a href="#contact">Contact</a>
+            </div>
           </div>
-        </details>
+        </div>
+        <div class="nav-group">
+          <a class="nav-root" href="horizon/" aria-expanded="false" aria-controls="horizon-sections">Horizon</a>
+          <div class="nav-submenu" id="horizon-sections" inert>
+            <div class="nav-links">
+              <a href="horizon/index.html">History</a>
+              <a href="horizon/boot.html">Boot</a>
+              <a href="horizon/memory.html">Memory</a>
+              <a href="horizon/schedule.html">Schedule</a>
+              <a href="horizon/interrupts.html">IRQ</a>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <button class="theme" id="theme" type="button" aria-label="Switch theme">
