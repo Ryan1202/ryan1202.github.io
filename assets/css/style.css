@@ -877,7 +877,6 @@ a.proj:hover .proj-title svg { opacity: 1; transform: none; }
   font-size: clamp(1.5rem, 2.5vw, 2rem);
 }
 .forks .proj {
-  grid-template-columns: minmax(0, 1fr);
   padding-block: 16px;
 }
 
