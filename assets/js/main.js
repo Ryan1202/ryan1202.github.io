@@ -130,6 +130,19 @@
       });
     });
 
+    function revealMenu(menu) {
+      if (!menu.open) return;
+
+      var submenu = menu.querySelector('.nav-submenu');
+      var overflow = submenu.getBoundingClientRect().right - nav.getBoundingClientRect().right;
+      if (overflow > 0) nav.scrollLeft += Math.ceil(overflow);
+    }
+
+    menus.forEach(function (menu) {
+      menu.addEventListener('toggle', function () { revealMenu(menu); });
+      revealMenu(menu);
+    });
+
     nav.addEventListener('keydown', function (event) {
       if (event.key !== 'Escape') return;
 
