@@ -1202,18 +1202,16 @@ a.proj:hover .proj-title svg { opacity: 1; transform: none; }
   transform: scaleX(1);
 }
 
-.horizon-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  font-family: var(--mono);
-  font-size: .75rem;
+.horizon-detail {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: .1em;
+  text-underline-offset: .2em;
 }
 
 #horizon-commit { overflow-wrap: anywhere; }
 
-.horizon-links a,
-.horizon-detail,
 #horizon-commit,
 .now-list a {
   text-decoration: underline;
@@ -1221,8 +1219,6 @@ a.proj:hover .proj-title svg { opacity: 1; transform: none; }
 }
 
 .horizon-detail:hover,
-.horizon-links a:hover,
-.horizon-links a[aria-current="page"],
 #horizon-commit:hover,
 .now-list a:hover {
   color: var(--accent);
