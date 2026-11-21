@@ -85,44 +85,82 @@
 
     <section class="section" id="milestones" aria-label="Subsystem details">
       <div class="wrap">
-        <section class="reveal" aria-label="Discovering interrupt hardware">
+        <section class="reveal" aria-label="From firmware tables to a hardware route">
           <div class="sec-head">
-            <span class="sec-num">Aug 2026</span>
-            <h2 class="sec-title">Discovering interrupt hardware</h2>
+            <span class="sec-num">Discovery</span>
+            <h2 class="sec-title">From firmware tables to a hardware route</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The ACPI initialization reads the MADT to find Local APICs and I/O APICs and to pick up ISA interrupt source overrides.</p>
+            <p class="feature-desc">ACPI’s MADT tells Horizon which Local APICs and I/O APICs are present. Each I/O APIC covers a range of Global System Interrupts, or GSIs. An ISA source override specifies the GSI, polarity and trigger mode associated with a legacy interrupt line.</p>
+            <p class="feature-desc">The platform records those overrides before setting up interrupt delivery. The I/O APIC routes device interrupts toward a destination Local APIC. The Local APIC delivers the selected vector to its CPU.</p>
             <div class="feature-actions">
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/113ee61">ACPI table discovery</a>
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/acpi-roadmap.md">ACPI roadmap</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/kernel/interrupt/legacy.rs">ISA interrupt overrides</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/interrupt/1-apic.md">APIC notes</a>
             </div>
           </div>
         </section>
 
-        <section class="reveal" aria-label="IRQ routing and affinity">
+        <section class="reveal" aria-label="Translating a vector into a logical IRQ">
           <div class="sec-head">
-            <span class="sec-num">Sep 2026</span>
-            <h2 class="sec-title">IRQ routing and affinity</h2>
+            <span class="sec-num">Vectors</span>
+            <h2 class="sec-title">Translating a vector into a logical IRQ</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The IRQ core separates a logical IRQ from the x86 interrupt vector used to deliver it. Affinity adds a way to select eligible CPUs for an IRQ and gives the controller code a basis for choosing a destination.</p>
+            <p class="feature-desc">The hardware line number belongs to an interrupt domain, and Horizon allocates a logical <code>IrqNumber</code> for the kernel to identify the interrupt across domains. The x86 vector is a separate CPU-side delivery number. The vector manager keeps a bitmap and a vector-to-IRQ map for each CPU.</p>
+            <p class="feature-desc">The allocator reserves space for exceptions, legacy ISA vectors, the system-call entry and Local APIC special vectors. Legacy IRQs 0 through 15 retain vectors <code>0x20</code> through <code>0x2f</code>. For a normal device event, the architecture dispatch code uses the receiving APIC and vector to look up the logical IRQ and pass it to the IRQ core.</p>
             <div class="feature-actions">
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/84a5059">IRQ core rewrite</a>
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/interrupt/8-affinity.md">Affinity notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/interrupt/3-irq-number.md">Hardware and logical IRQs</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/kernel/interrupt/vector.rs">Per-CPU vector allocation</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/kernel/interrupt/mod.rs">x86 vector dispatch</a>
             </div>
           </div>
         </section>
 
-        <section class="reveal" aria-label="Periodic clock events">
+        <section class="reveal" aria-label="Delivery and shared handler lifetime">
           <div class="sec-head">
-            <span class="sec-num">Nov 2026</span>
-            <h2 class="sec-title">Periodic clock events</h2>
+            <span class="sec-num">Handlers</span>
+            <h2 class="sec-title">Delivery and shared handler lifetime</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The PIT first supplied periodic events through the clock-event layer. The Local APIC timer then gained calibration and periodic mode.</p>
+            <p class="feature-desc"><code>request_irq</code> associates a registered handler with a logical interrupt and returns an <code>IrqHandle</code>. A shared IRQ can have several handlers. Dispatch walks the enabled handlers, and each handler can report whether it handled the interrupt. Disabling one shared handler leaves the line enabled while another handler still needs it.</p>
+            <p class="feature-desc">The IRQ flow defines when the controller is acknowledged, masked or sent an end-of-interrupt signal. A level-triggered flow masks and acknowledges the line before calling handlers, then unmasks it if delivery is still enabled. When the last handle goes away, the core masks the line, drains in-flight handling and deactivates its hardware route.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/interrupt/5-handle.md">IRQ handle lifecycle</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/kernel/interrupt/irq/flow.rs">Edge and level dispatch</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/kernel/interrupt/irq/handle.rs">Shared handler management</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="reveal" aria-label="Selecting an eligible CPU">
+          <div class="sec-head">
+            <span class="sec-num">Affinity</span>
+            <h2 class="sec-title">Selecting an eligible CPU</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The requested affinity mask describes the CPUs eligible for an IRQ. Vector allocation intersects that mask with the online CPU mask and picks an eligible CPU with available vectors. The effective mask records the CPU selected by the hardware route.</p>
+            <p class="feature-desc">When a route changes, the previous vector assignment can still have an interrupt in flight. The routing code keeps the old assignment until it is safe to reclaim, so an already-delivered vector can still be recognized during the change.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/45ddfd4">IRQ affinity support</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/interrupt/8-affinity.md">Requested and effective affinity</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/kernel/interrupt/apic/domain.rs">APIC route lifecycle</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="reveal" aria-label="Periodic events from PIT and Local APIC">
+          <div class="sec-head">
+            <span class="sec-num">Clock events</span>
+            <h2 class="sec-title">Periodic events from PIT and Local APIC</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The clock-event layer gives the PIT and Local APIC timer a common way to deliver timer events. The PIT supplies the initial periodic ticks. The Local APIC timer measures its counter against those tick boundaries so the kernel can convert a period into a local timer count.</p>
+            <p class="feature-desc">Tick-device selection prefers a timer dedicated to the current CPU over a shared source. The Local APIC timer uses a reserved vector, and its dispatch path acknowledges the Local APIC before calling the timer handler.</p>
             <div class="feature-actions">
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/1867d85">PIT clock events</a>
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/cb0568b">Local APIC timer</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/cb0568b">Local APIC calibration</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/kernel/time/tick.rs">Tick-device selection</a>
             </div>
           </div>
         </section>

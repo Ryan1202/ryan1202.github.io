@@ -85,16 +85,33 @@
 
     <section class="section" id="milestones" aria-label="Subsystem details">
       <div class="wrap">
-        <section class="reveal" aria-label="Physical memory and virtual mappings">
+        <section class="reveal" aria-label="Physical frames and allocation zones">
           <div class="sec-head">
             <span class="sec-num">Frames</span>
-            <h2 class="sec-title">Physical memory and virtual mappings</h2>
+            <h2 class="sec-title">Physical frames and allocation zones</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The buddy allocator manages physical frames in power-of-two blocks. The page-table walker handles virtual mappings. Keeping these responsibilities separate lets vmalloc build a contiguous virtual range from physical pages that may be scattered.</p>
+            <p class="feature-desc">The buddy allocator groups physically contiguous frames into power-of-two blocks. It splits a larger block to satisfy a smaller request and joins free buddy blocks on release. On x86_64, the allocator separates <code>MEM32</code> from memory above 4 GiB so a request can express whether it needs a 32-bit physical address.</p>
+            <p class="feature-desc">The <code>vmemmap</code> region gives the kernel a place to look up metadata by frame number, with backing allocated for physical ranges discovered at boot. Frame references record exclusive or shared ownership. When the last reference to an ordinary allocated frame goes away, its block can return to the buddy allocator.</p>
             <div class="feature-actions">
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/memory/01-overview.md">Allocator overview</a>
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/memory/04-vmalloc.md">Virtual allocations</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/memory/07-buddy.md">Buddy allocator notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/memory/11-layout64.md">64-bit memory layout</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/kernel/memory/frame/reference.rs">Frame ownership</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="reveal" aria-label="Memory ranges and device registers">
+          <div class="sec-head">
+            <span class="sec-num">Mappings</span>
+            <h2 class="sec-title">Memory ranges and device registers</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc"><code>vmalloc</code> reserves consecutive virtual addresses and maps backing frames into them. The kernel can use the result as a single buffer even when the physical frames are scattered. A direct-mapped allocation already has a virtual address derived from a fixed offset.</p>
+            <p class="feature-desc"><code>ioremap</code> maps an existing physical range, such as device registers, with a chosen cache type. Releasing that mapping returns the virtual address range. Device memory remains owned by the hardware. <code>PageAllocOptions</code> carries mapping and allocation choices such as cache type, physical contiguity and zero initialization.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/memory/04-vmalloc.md">Virtual allocations and I/O mappings</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/memory/09-options.md">Page and frame allocation options</a>
             </div>
           </div>
         </section>
@@ -105,10 +122,27 @@
             <h2 class="sec-title">Small allocations and C callers</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">SLUB-style caches supply small objects without dedicating a page to each one. Rust code can use the native memory interfaces, while C callers use the C ABI for allocations, mappings and caches.</p>
+            <p class="feature-desc">For small allocations, <code>kmalloc</code> selects a SLUB cache by size. A slab holds multiple object slots, so allocation can reuse a slot without requesting a fresh frame for each object. Larger requests fall back to the page allocator.</p>
+            <p class="feature-desc"><code>kfree</code> uses the metadata of the frame containing the pointer to tell a slab object from a page-backed allocation. The C ABI exposes the allocator to existing drivers. Rust code can also use the <code>Kmalloc</code> allocator with owning types such as <code>Box</code>.</p>
             <div class="feature-actions">
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/memory/10-slub.md">SLUB notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/memory/02-kmalloc.md">Object allocation and release</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/memory/10-slub.md">SLUB implementation</a>
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/memory/08-c-api.md">C memory API</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="reveal" aria-label="Locking and reclaiming page tables">
+          <div class="sec-head">
+            <span class="sec-num">Page tables</span>
+            <h2 class="sec-title">Locking and reclaiming page tables</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The page-table walker descends from the root to the entry covering a virtual address. <code>PageLock</code> tracks the locked part of that path so mapping and unmapping code can update entries while keeping the backing tables alive.</p>
+            <p class="feature-desc">On unmap, the implementation decrements the table’s entry count. When an empty table can be reclaimed, it clears the parent entry and releases the table frame. This can continue up the tree until it reaches a table that still has mappings or references.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/memory/12-page_lock.md">Page-table locking</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/kernel/memory/page/table.rs">Unmapping and table reclamation</a>
             </div>
           </div>
         </section>
@@ -119,7 +153,8 @@
             <h2 class="sec-title">Memory shared with devices</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The DMA subsystem has a separate lifecycle for buffers used by devices. The June 2026 rewrite revised this subsystem after the memory and x86_64 changes.</p>
+            <p class="feature-desc">The DMA layer treats the CPU pointer and the device-visible DMA address as separate values. A device describes constraints such as its address mask and the boundary a transfer must stay within. A coherent allocation can supply a buffer used by both the CPU and the device, such as a descriptor ring.</p>
+            <p class="feature-desc">A streaming transfer starts with an existing buffer. The DMA layer can map it directly when the buffer satisfies the device’s constraints. When it needs a device-accessible copy, it uses a bounce buffer and synchronizes data according to the transfer direction. The C API uses a handle to keep that mapping alive until the driver unmaps it.</p>
             <div class="feature-actions">
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/9b9ec28">DMA rewrite</a>
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/dma/1-lifecycle-and-ffi.md">DMA lifecycle and C interface</a>

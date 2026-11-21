@@ -179,8 +179,9 @@
               booting from GRUB2 and running in QEMU.
             </p>
             <p class="feature-desc dim">
-              Started in 2021 as a 32-bit toy kernel. Now migrating its core
-              subsystems to Rust, one module at a time.
+              Started in January 2020 as a 32-bit toy kernel and first uploaded
+              to GitHub in July 2021. Now migrating its core subsystems to Rust,
+              one module at a time.
             </p>
             <div class="feature-actions">
               <a class="btn btn-solid" href="horizon/index.html">See history</a>
@@ -265,6 +266,51 @@
           </li>
 
         </ul>
+
+        <section class="forks" id="forks" aria-labelledby="forks-title">
+          <h3 class="sec-title" id="forks-title">Forks</h3>
+          <ul class="projects">
+            <li class="reveal">
+              <a class="proj" href="https://github.com/Ryan1202/linux" target="_blank" rel="noopener">
+                <span class="proj-body">
+                  <span class="proj-title">linux <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                  <span class="proj-desc">The Asahi Linux kernel tree for running Linux on Apple silicon.</span>
+                  <span class="proj-desc">I added device-tree support for the built-in keyboard on the M4 MacBook Pro (J604).</span>
+                </span>
+              </a>
+            </li>
+
+            <li class="reveal">
+              <a class="proj" href="https://github.com/Ryan1202/mcarplay" target="_blank" rel="noopener">
+                <span class="proj-body">
+                  <span class="proj-title">mcarplay <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                  <span class="proj-desc">An Android app that streams Xiaomi CarWith to a wireless CarPlay receiver and relays touch input to the phone.</span>
+                  <span class="proj-desc">I fixed wireless session startup and stream recovery, and added forwarding for head-unit controls.</span>
+                </span>
+              </a>
+            </li>
+
+            <li class="reveal">
+              <a class="proj" href="https://github.com/Ryan1202/miuix" target="_blank" rel="noopener">
+                <span class="proj-body">
+                  <span class="proj-title">miuix <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                  <span class="proj-desc">A Compose Multiplatform UI library for mobile, desktop and web apps.</span>
+                  <span class="proj-desc">I split the demo screen into smaller lazy-list items and simplified the progress indicator logic.</span>
+                </span>
+              </a>
+            </li>
+
+            <li class="reveal">
+              <a class="proj" href="https://github.com/Ryan1202/nixpkgs" target="_blank" rel="noopener">
+                <span class="proj-body">
+                  <span class="proj-title">nixpkgs <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></span>
+                  <span class="proj-desc">The package collection for Nix and the system modules that make up NixOS.</span>
+                  <span class="proj-desc">I submitted fixes for Codex remote file operations and ripgrep discovery in the ChatGPT package, plus a cc-switch update.</span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </section>
       </div>
     </section>
 
@@ -360,10 +406,10 @@
               Officially that means statistics, AI and large-scale data. In
               practice I spend most of my time below the application layer: page
               tables, interrupt controllers, schedulers, and the bugs that only
-              appear when you boot your own code. Horizon started in 2021 as a
-              32-bit toy kernel; it is now a higher-half x86_64 kernel that boots
-              from GRUB2 under QEMU, and it is slowly being rewritten in Rust
-              module by module.
+              appear when you boot your own code. Horizon started in January 2020
+              as a 32-bit toy kernel and was first uploaded to GitHub in July 2021.
+              It is now a higher-half x86_64 kernel that boots from GRUB2 under
+              QEMU, and it is slowly being rewritten in Rust module by module.
             </p>
             <p class="reveal">
               When I'm not in QEMU I write small tools to understand formats and

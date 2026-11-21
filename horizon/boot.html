@@ -85,29 +85,80 @@
 
     <section class="section" id="milestones" aria-label="Subsystem details">
       <div class="wrap">
-        <section class="reveal" aria-label="From GRUB to the higher half">
+        <section class="reveal" aria-label="What GRUB passes to the kernel">
           <div class="sec-head">
-            <span class="sec-num">Boot</span>
-            <h2 class="sec-title">From GRUB to the higher half</h2>
+            <span class="sec-num">Handoff</span>
+            <h2 class="sec-title">What GRUB passes to the kernel</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">GRUB hands boot information to Horizon through Multiboot2. The transition to long mode sets up the initial page tables, and early memory setup uses the boot memory map to distinguish usable physical ranges from reserved ones.</p>
+            <p class="feature-desc">The 2024 move from floppy boot to GRUB introduced the Multiboot2 handoff. GRUB finds the header in the kernel image and enters <code>_start</code> in 32-bit protected mode. It passes a magic value in <code>EAX</code> and the physical address of its information block in <code>EBX</code>.</p>
+            <p class="feature-desc">Horizon saves both values before changing CPU modes. The loader validates the magic value and reads the tagged information block through a temporary mapping. It copies the memory map, framebuffer information and available ACPI root pointer into locations later initialization code can read.</p>
             <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/f5491ee">Switch to GRUB</a>
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/01-multiboot2.md">Multiboot2 notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/multiboot2/multiboot2.c">Boot information parser</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="reveal" aria-label="Entering x86_64 long mode">
+          <div class="sec-head">
+            <span class="sec-num">CPU mode</span>
+            <h2 class="sec-title">Entering x86_64 long mode</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The assembly entry builds a temporary page-table hierarchy with an identity mapping for the first 2 MiB. This lets instruction fetches continue at the same addresses when paging turns on. The entry enables PAE in <code>CR4</code>, loads the PML4 address into <code>CR3</code>, sets <code>EFER.LME</code>, and enables paging through <code>CR0</code>.</p>
+            <p class="feature-desc">A far jump through the bootstrap GDT selects the 64-bit code segment. The loader then sets up a temporary stack and calls the C code that reads Multiboot2 tags.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/multiboot2/multiboot2.asm">Assembly entry</a>
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/10-road_to_64.md">Road to 64-bit</a>
             </div>
           </div>
         </section>
 
-        <section class="reveal" aria-label="Reading the boot memory map">
+        <section class="reveal" aria-label="Jumping to the higher half">
           <div class="sec-head">
-            <span class="sec-num">Early init</span>
-            <h2 class="sec-title">Reading the boot memory map</h2>
+            <span class="sec-num">Mappings</span>
+            <h2 class="sec-title">Jumping to the higher half</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">Early initialization reads the bootloader’s memory map to find usable physical ranges. It reserves the ranges occupied by the kernel and boot information before handing memory to the allocator.</p>
+            <p class="feature-desc">The linker script keeps the Multiboot2 and early initialization sections at low addresses. It gives the main kernel high virtual addresses while keeping its load addresses low. From <code>kernel_early_start</code>, <code>page_early_setup</code> builds the initial higher-half alias using 2 MiB pages.</p>
+            <p class="feature-desc">The kernel jumps to its high virtual entry and switches to the higher-half stack address. Early memory initialization then removes the temporary low identity mapping. The higher-half alias keeps the stack and kernel image accessible during that handoff.</p>
             <div class="feature-actions">
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/memory/04-early.md">Early memory setup notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/kernel.lds">Kernel linker script</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/kernel/page.c">Early page tables</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/kernel/start.asm">Higher-half entry</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="reveal" aria-label="Turning the boot map into allocatable memory">
+          <div class="sec-head">
+            <span class="sec-num">Early init</span>
+            <h2 class="sec-title">Turning the boot map into allocatable memory</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The full allocator needs frame metadata and page tables before it can hand out pages. Early initialization uses a page-aligned cursor after the kernel image to allocate those structures. It records the cursor so the new allocator can skip the space already consumed.</p>
+            <p class="feature-desc">The frame initializer walks the map copied from Multiboot2 and marks the ranges occupied by the kernel and early allocations. Once frame metadata is ready, the buddy allocator takes over the free ranges. Kernel startup then initializes the object caches, virtual mapping allocator, per-CPU storage and DMA bounce buffer pool.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/memory/04-early.md">Early allocation notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/kernel/memory/frame/early.rs">Frame initialization</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/kernel/memory.c">Memory startup order</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="reveal" aria-label="Bringing up the first devices">
+          <div class="sec-head">
+            <span class="sec-num">Platform</span>
+            <h2 class="sec-title">Bringing up the first devices</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">Early platform setup installs the kernel’s segment and interrupt descriptors and reads CPU features. After memory initialization, the main entry initializes ACPI and the core device managers. Platform setup then reads the firmware’s x86 topology before configuring interrupt controllers and timers.</p>
+            <p class="feature-desc">The platform starts the framebuffer console and enables CPU interrupts once the controller and entry paths are ready. At that point, periodic events can drive Local APIC timer calibration.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/kernel/main.c">Kernel initialization</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/src/arch/x86/kernel/platform.c">Platform bring-up</a>
             </div>
           </div>
         </section>
