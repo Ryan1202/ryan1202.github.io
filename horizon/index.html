@@ -40,8 +40,8 @@
 
       <nav class="nav" aria-label="Horizon pages">
         <a href="index.html" aria-current="page">History</a>
-        <a href="memory.html">Memory</a>
-        <a href="interrupts.html">IRQs</a>
+        <a href="memory.html">Boot &amp; memory</a>
+        <a href="interrupts.html">Scheduling &amp; interrupts</a>
       </nav>
 
       <button class="theme" id="theme" type="button" aria-label="Switch theme">
@@ -65,71 +65,115 @@
 
     <section class="section" id="milestones" aria-label="Milestones">
       <div class="wrap">
-        <section aria-label="The first kernel">
+        <section>
           <div class="sec-head">
-            <span class="sec-num">Jul 2021</span>
-            <h2 class="sec-title">The first kernel</h2>
+            <span class="sec-num">2021–2022</span>
+            <h2 class="sec-title">From booting to running programs</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The initial commits established the project. Within the first week, a linker script gave the kernel an explicit link layout.</p>
+            <p class="feature-desc">The first boot code needed a predictable kernel image. The July 2021 linker script selected ELF32 for i386, set the entry point to <code>_start</code>, and placed the image at 1 MiB. It also exposed the boundaries of the initialization routines so startup code could find them.</p>
+            <p class="feature-desc">By July 2022, the next problem was loading a program from disk and giving it a way to call the kernel. The tree gained an ELF loader, changes to paging and process setup, and a test application built separately from the kernel. The system-call code gave that application an interface back into the kernel.</p>
             <div class="feature-actions">
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/9736954">Linker script</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/9736954">Kernel linker script</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/f66bdc7">ELF loader and test application</a>
             </div>
           </div>
         </section>
 
-        <section aria-label="Loading programs">
+        <section>
           <div class="sec-head">
-            <span class="sec-num">Jul 2022</span>
-            <h2 class="sec-title">Loading programs</h2>
+            <span class="sec-num">2023–2024</span>
+            <h2 class="sec-title">Real I/O and a new boot path</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The tree gained an ELF loader, a test application and a system-call interface. Changes across the loader, paging code and process code brought executable loading into the kernel.</p>
+            <p class="feature-desc">FAT32 access exposed two concrete problems: repeated reads of the allocation table and incorrect reads of large files. The January 2023 changes buffered the FAT table and fixed the large-file path.</p>
+            <p class="feature-desc">In November 2024, Horizon moved from floppy boot to a hard-disk image booted by GRUB. Multiboot2 defined the handoff and gave the kernel a standard format for reading boot information such as the memory map.</p>
             <div class="feature-actions">
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/f66bdc7">Application and ELF changes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/f241bba">FAT table buffering</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/57d367d">Large-file fix</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/f5491ee">GRUB and Multiboot2</a>
             </div>
           </div>
         </section>
 
-        <section aria-label="Storage work and the first Rust experiment">
+        <section>
           <div class="sec-head">
-            <span class="sec-num">Mar&ndash;Oct 2025</span>
-            <h2 class="sec-title">Storage work and the first Rust experiment</h2>
+            <span class="sec-num">2025</span>
+            <h2 class="sec-title">Storage layers and the first Rust build</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The FAT32 rewrite introduced partition discovery and block caching alongside a common object interface. Later that year, the build learned to link Rust code into the kernel as a static library.</p>
+            <p class="feature-desc">A storage request may cross partition, filesystem and device boundaries. The FAT32 rework introduced partition discovery, mountable objects and a block cache. Follow-up changes gave callers common create and delete operations and let the storage layer split requests to fit the device path.</p>
+            <p class="feature-desc">Rust entered the build in October. The configurator learned to link a Rust static library into the existing C kernel, and an experimental kernel-side test exercised that route. The same build could then accommodate subsystem work in both languages.</p>
             <div class="feature-actions">
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/1546a4e">Storage rework</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/08157ef">Common file operations</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/d07b9fc">Storage request splitting</a>
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/c5d9744">Rust static linking</a>
             </div>
           </div>
         </section>
 
-        <section aria-label="Memory, x86_64 and kernel threads">
+        <section>
           <div class="sec-head">
-            <span class="sec-num">Mar&ndash;Jul 2026</span>
-            <h2 class="sec-title">Memory, x86_64 and kernel threads</h2>
+            <span class="sec-num">Mar–Jun 2026</span>
+            <h2 class="sec-title">Rebuilding memory for x86_64</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">The memory rewrite introduced a layered allocator with Rust and C interfaces. The x86_64 port followed in April, then the summer thread rewrite moved scheduling and synchronization into Rust.</p>
+            <p class="feature-desc">Small objects, contiguous physical frames and contiguous virtual ranges have different allocation requirements. The March rewrite split those jobs across object caches, a buddy allocator and virtual mappings, with Rust interfaces and a C ABI. The buddy allocator can merge matching free blocks to make larger contiguous allocations possible again.</p>
+            <p class="feature-desc">The April move to x86_64 changed address widths and the paging hierarchy. Horizon added a path into long mode, revised the higher-half layout and corrected type and layout assumptions carried over from 32-bit code. Follow-up page-table work added locking, iteration and automatic reclamation of page-table pages.</p>
             <div class="feature-actions">
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/7567ba7">Memory rewrite</a>
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/252c437">x86_64 port</a>
-              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/c018c94">Thread and synchronization rewrite</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/d304d2a">Page-table locking and reclamation</a>
+              <a class="btn btn-line" href="memory.html">Boot &amp; memory</a>
             </div>
           </div>
         </section>
 
-        <section aria-label="From firmware tables to scheduler ticks">
+        <section>
           <div class="sec-head">
-            <span class="sec-num">Aug&ndash;Nov 2026</span>
-            <h2 class="sec-title">From firmware tables to scheduler ticks</h2>
+            <span class="sec-num">Jul–Aug 2026</span>
+            <h2 class="sec-title">Thread lifetimes and CPU-local state</h2>
           </div>
           <div class="feature-main">
-            <p class="feature-desc">ACPI table discovery supplied interrupt-controller information. The IRQ core gained affinity support, and the timer work added periodic clock events from the PIT and the Local APIC timer.</p>
+            <p class="feature-desc">A thread can be woken while it is still switching away. Putting it back on the run queue too soon can make it runnable before the previous switch has finished. The wait-queue design records this intermediate state and lets switch cleanup complete the wakeup when the thread is still on a CPU.</p>
+            <p class="feature-desc">The thread rewrite also moved scheduling and synchronization into Rust with interfaces for C callers. Static and dynamic per-CPU storage followed, giving kernel code separate instances for state that belongs to each processor.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/c018c94">Thread and synchronization rewrite</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/thread/4-wait-queue.md">Wait-queue design</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/f940b01">Dynamic per-CPU storage</a>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sec-head">
+            <span class="sec-num">Aug–Sep 2026</span>
+            <h2 class="sec-title">Discovering and routing interrupts</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">Interrupt routing depends on firmware-provided details. Horizon began reading ACPI tables to discover Local APIC and I/O APIC information and apply platform-specific ISA interrupt overrides. A separate AML effort built a namespace from the DSDT and added basic method execution.</p>
+            <p class="feature-desc">The IRQ core separated logical interrupt numbers from the CPU vectors used to deliver them. Affinity then gave the routing code a set of eligible CPUs for a given IRQ, laying groundwork for steering interrupts on multicore systems.</p>
             <div class="feature-actions">
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/113ee61">ACPI discovery</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/1a09039">I/O APIC and ISA overrides</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/ae62d82">AML method execution</a>
               <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/45ddfd4">IRQ affinity</a>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sec-head">
+            <span class="sec-num">Nov 2026</span>
+            <h2 class="sec-title">A common interface for timer interrupts</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The PIT and Local APIC timer have different programming interfaces. The clock-event layer gave periodic ticks a shared interface, with the PIT as the first provider. The Local APIC timer then gained calibration so the kernel could translate a requested period into a timer count and use it as another periodic source.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/1867d85">PIT clock events</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/cb0568b">Local APIC timer calibration</a>
+              <a class="btn btn-line" href="interrupts.html">Scheduling &amp; interrupts</a>
             </div>
           </div>
         </section>

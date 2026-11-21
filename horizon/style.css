@@ -40,3 +40,27 @@
     gap: 10px;
   }
 }
+
+.horizon .feature-desc + .feature-desc {
+  margin-top: 12px;
+}
+
+@media (max-width: 560px) {
+  .head-inner {
+    gap: 12px;
+  }
+
+  .head-inner .nav {
+    gap: clamp(8px, 3vw, 16px);
+  }
+
+  .head-inner .nav a {
+    text-align: center;
+    line-height: 1.35;
+    letter-spacing: .07em;
+  }
+
+  .head-inner .theme {
+    flex-shrink: 0;
+  }
+}
