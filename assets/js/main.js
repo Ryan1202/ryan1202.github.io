@@ -151,10 +151,12 @@
       if (!isOpen(menu)) return;
 
       var bounds = nav.getBoundingClientRect();
-      var left = menu.group.getBoundingClientRect().left - bounds.left;
+      // Keep the preceding group reachable when the open menu exceeds the viewport.
+      var leading = menu.group.previousElementSibling || menu.group;
+      var left = leading.getBoundingClientRect().left - bounds.left;
       var right = menu.panel.getBoundingClientRect().right - bounds.right;
       if (left < 0) nav.scrollLeft += Math.floor(left);
-      else if (right > 0) nav.scrollLeft += Math.ceil(right);
+      else if (right > 0) nav.scrollLeft += Math.floor(Math.min(left, right));
     }
 
     menus.forEach(function (menu) {
