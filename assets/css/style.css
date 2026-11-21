@@ -1206,7 +1206,6 @@ a.proj:hover .proj-title svg { opacity: 1; transform: none; }
   display: flex;
   flex-wrap: wrap;
   gap: 8px 16px;
-  margin-top: 18px;
   font-family: var(--mono);
   font-size: .75rem;
 }

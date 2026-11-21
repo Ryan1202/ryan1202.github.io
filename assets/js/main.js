@@ -128,12 +128,23 @@
 
   var commitLink = document.getElementById('horizon-commit');
   if (commitLink) {
-    fetch('https://api.github.com/repos/Ryan1202/Horizon-Operating-System/commits?sha=driver-refactor&per_page=1')
+    var repoApi = 'https://api.github.com/repos/Ryan1202/Horizon-Operating-System';
+
+    fetch(repoApi)
       .then(function (response) {
-        return response.ok ? response.json() : [];
+        if (response.ok) return response.json();
+      })
+      .then(function (repo) {
+        if (!repo || !repo.default_branch) return;
+
+        var branch = encodeURIComponent(repo.default_branch);
+        return fetch(repoApi + '/commits?sha=' + branch + '&per_page=1');
+      })
+      .then(function (response) {
+        if (response && response.ok) return response.json();
       })
       .then(function (commits) {
-        var latest = commits[0];
+        var latest = commits && commits[0];
         if (!latest) return;
 
         var subject = latest.commit.message.split(/\r?\n/)[0];
