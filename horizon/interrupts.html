@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scheduling &amp; IRQs · Horizon project | Jiajun Wang</title>
+  <meta name="description" content="Horizon’s Rust thread scheduler, APIC interrupt routing and clock-event layer took shape across a series of subsystem rewrites in 2026." />
+  <meta name="author" content="Jiajun Wang" />
+
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230b0b0d'/><text x='32' y='43' font-family='monospace' font-size='28' font-weight='bold' text-anchor='middle' fill='%23ff5c35'>JW</text></svg>" />
+
+  <link rel="preload" href="../assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin />
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('jw-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* storage unavailable */ }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#milestones">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <header class="head" id="head">
+    <div class="wrap head-inner">
+      <a class="brand" href="../index.html" aria-label="Jiajun Wang, home">
+        <span class="brand-mark">JW</span>
+        <span class="brand-name">Jiajun&nbsp;Wang</span>
+      </a>
+
+      <nav class="nav" aria-label="Horizon pages">
+        <a href="index.html">History</a>
+        <a href="memory.html">Memory</a>
+        <a href="interrupts.html" aria-current="page">IRQs</a>
+      </nav>
+
+      <button class="theme" id="theme" type="button" aria-label="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.6M12 19v2.6M2.4 12H5M19 12h2.6M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.2A8.6 8.6 0 1 1 10.8 3.4a6.8 6.8 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="horizon" id="top">
+    <section class="hero">
+      <div class="wrap">
+        <p class="tag-line">Kernel design</p>
+        <h1 class="hero-title">Scheduling &amp; IRQs</h1>
+        <p class="lede">Horizon’s scheduling and interrupt work converged in November 2026, when the clock-event tick began calling into the scheduler.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="https://github.com/Ryan1202/Horizon-Operating-System">View source</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="milestones" aria-label="Subsystem details">
+      <div class="wrap">
+        <section aria-label="Threads, waits and context switches">
+          <div class="sec-head">
+            <span class="sec-num">Jul 2026</span>
+            <h2 class="sec-title">Threads, waits and context switches</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The thread rewrite moved scheduling and yield logic into Rust. Wait queues give blocked threads a place to sleep until they can be woken. A thread that exits is cleaned up after the switch, when another thread is running.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/5048b05">Schedule and yield rewrite</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/thread/3-scheduler.md">Scheduler notes</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/thread/4-wait-queue.md">Wait queue notes</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Discovering interrupt hardware">
+          <div class="sec-head">
+            <span class="sec-num">Aug 2026</span>
+            <h2 class="sec-title">Discovering interrupt hardware</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The ACPI initialization reads the MADT to find Local APICs and I/O APICs and to pick up ISA interrupt source overrides. The AML work added a namespace and partial execution support. The ACPI roadmap tracks remaining interpreter, device and power work.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/113ee61">ACPI table discovery</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/acpi-roadmap.md">ACPI roadmap</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="IRQ routing and affinity">
+          <div class="sec-head">
+            <span class="sec-num">Sep 2026</span>
+            <h2 class="sec-title">IRQ routing and affinity</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The IRQ core separates a logical IRQ from the x86 interrupt vector used to deliver it. Affinity adds a way to select eligible CPUs for an IRQ and gives the controller code a basis for choosing a destination.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/84a5059">IRQ core rewrite</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/blob/cb0568bcf60d0da9837fcda852e78c9717d1505b/doc/notes/interrupt/8-affinity.md">Affinity notes</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Periodic clock events">
+          <div class="sec-head">
+            <span class="sec-num">Nov 2026</span>
+            <h2 class="sec-title">Clock events reach the scheduler</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The PIT first supplied periodic events through the clock-event layer. The Local APIC timer then gained calibration and periodic mode.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/1867d85">PIT clock events</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/cb0568b">Local APIC timer</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>© <span id="year">2026</span> Jiajun Wang</span>
+      <span class="foot-mid">Hand-written HTML, CSS &amp; JavaScript · no trackers</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

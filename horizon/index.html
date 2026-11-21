@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Horizon · Horizon project | Jiajun Wang</title>
+  <meta name="description" content="Horizon began as a 32-bit kernel in 2021. Its history runs from early experiments with booting and loading programs to a higher-half x86_64 kernel with core subsystems written in C and Rust." />
+  <meta name="author" content="Jiajun Wang" />
+
+  <meta name="theme-color" content="#0b0b0d" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230b0b0d'/><text x='32' y='43' font-family='monospace' font-size='28' font-weight='bold' text-anchor='middle' fill='%23ff5c35'>JW</text></svg>" />
+
+  <link rel="preload" href="../assets/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../assets/fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin />
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('jw-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* storage unavailable */ }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#milestones">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <header class="head" id="head">
+    <div class="wrap head-inner">
+      <a class="brand" href="../index.html" aria-label="Jiajun Wang, home">
+        <span class="brand-mark">JW</span>
+        <span class="brand-name">Jiajun&nbsp;Wang</span>
+      </a>
+
+      <nav class="nav" aria-label="Horizon pages">
+        <a href="index.html" aria-current="page">History</a>
+        <a href="memory.html">Memory</a>
+        <a href="interrupts.html">IRQs</a>
+      </nav>
+
+      <button class="theme" id="theme" type="button" aria-label="Switch theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.6M12 19v2.6M2.4 12H5M19 12h2.6M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.2A8.6 8.6 0 1 1 10.8 3.4a6.8 6.8 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="horizon" id="top">
+    <section class="hero">
+      <div class="wrap">
+        <p class="tag-line">Development history</p>
+        <h1 class="hero-title">Horizon</h1>
+        <p class="lede">Horizon began as a 32-bit kernel in 2021. Its history runs from early experiments with booting and loading programs to a higher-half x86_64 kernel with core subsystems written in C and Rust.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="https://github.com/Ryan1202/Horizon-Operating-System">View source</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="milestones" aria-label="Milestones">
+      <div class="wrap">
+        <section aria-label="The first kernel">
+          <div class="sec-head">
+            <span class="sec-num">Jul 2021</span>
+            <h2 class="sec-title">The first kernel</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The initial commits established the project. Within the first week, a linker script gave the kernel an explicit link layout.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/9736954">Linker script</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Loading programs">
+          <div class="sec-head">
+            <span class="sec-num">Jul 2022</span>
+            <h2 class="sec-title">Loading programs</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The tree gained an ELF loader, a test application and a system-call interface. Changes across the loader, paging code and process code brought executable loading into the kernel.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/f66bdc7">Application and ELF changes</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Storage work and the first Rust experiment">
+          <div class="sec-head">
+            <span class="sec-num">Mar&ndash;Oct 2025</span>
+            <h2 class="sec-title">Storage work and the first Rust experiment</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The FAT32 rewrite introduced partition discovery and block caching alongside a common object interface. Later that year, the build learned to link Rust code into the kernel as a static library.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/1546a4e">Storage rework</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/c5d9744">Rust static linking</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="Memory, x86_64 and kernel threads">
+          <div class="sec-head">
+            <span class="sec-num">Mar&ndash;Jul 2026</span>
+            <h2 class="sec-title">Memory, x86_64 and kernel threads</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">The memory rewrite introduced a layered allocator with Rust and C interfaces. The x86_64 port followed in April, then the summer thread rewrite moved scheduling and synchronization into Rust.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/7567ba7">Memory rewrite</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/252c437">x86_64 port</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/c018c94">Thread and synchronization rewrite</a>
+            </div>
+          </div>
+        </section>
+
+        <section aria-label="From firmware tables to scheduler ticks">
+          <div class="sec-head">
+            <span class="sec-num">Aug&ndash;Nov 2026</span>
+            <h2 class="sec-title">From firmware tables to scheduler ticks</h2>
+          </div>
+          <div class="feature-main">
+            <p class="feature-desc">ACPI table discovery supplied interrupt-controller information. The IRQ core gained affinity support, and the timer work added periodic clock events from the PIT and the Local APIC timer.</p>
+            <div class="feature-actions">
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/113ee61">ACPI discovery</a>
+              <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System/commit/45ddfd4">IRQ affinity</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>© <span id="year">2026</span> Jiajun Wang</span>
+      <span class="foot-mid">Hand-written HTML, CSS &amp; JavaScript · no trackers</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

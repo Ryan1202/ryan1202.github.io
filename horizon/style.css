@@ -1,0 +1,42 @@
+.horizon .hero {
+  min-height: auto;
+  padding-bottom: 56px;
+}
+
+.horizon .hero-title {
+  font-size: clamp(2.5rem, 9vw, 6rem);
+  margin-block: 12px 20px;
+}
+
+.horizon .section {
+  padding: 0 0 64px;
+}
+
+.horizon .sec-head {
+  grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
+  margin-bottom: 16px;
+}
+
+.horizon .feature-main {
+  border: 0;
+  padding: 0 0 40px;
+}
+
+.horizon .feature-desc {
+  max-width: 68ch;
+}
+
+.nav a[aria-current="page"] {
+  color: var(--text);
+}
+
+.nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 560px) {
+  .horizon .sec-head {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
