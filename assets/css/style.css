@@ -434,6 +434,14 @@ html[data-theme="light"] .hero-glow { opacity: .12; }
   margin-top: 36px;
 }
 
+.btn,
+.source-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -441,13 +449,10 @@ html[data-theme="light"] .hero-glow { opacity: .12; }
   padding: 14px 22px;
   border: 1px solid transparent;
   border-radius: 2px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
   transition: background-color .25s, border-color .25s, color .25s, transform .25s var(--ease);
 }
-.btn svg {
+.btn svg,
+.btn-note a svg {
   width: 12px;
   height: 12px;
   fill: none;
@@ -457,7 +462,8 @@ html[data-theme="light"] .hero-glow { opacity: .12; }
   stroke-linejoin: round;
   transition: transform .3s var(--ease);
 }
-.btn:hover svg { transform: translate(2px, -2px); }
+.btn:hover svg,
+.btn-note a:hover svg { transform: translate(2px, -2px); }
 
 .btn-solid {
   background: var(--accent);
@@ -696,6 +702,11 @@ html[data-theme="light"] .hero-glow { opacity: .12; }
   letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--text-3);
+}
+.btn-note a { white-space: nowrap; }
+.btn-note a svg {
+  margin-inline-start: 4px;
+  vertical-align: -.25em;
 }
 
 .feature-spec {

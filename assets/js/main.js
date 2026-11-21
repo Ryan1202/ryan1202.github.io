@@ -245,13 +245,12 @@
   }
 
   /* ---------- email ---------- */
-  /* Built at runtime so the raw address never appears in the HTML source. */
-  var mailRow = document.getElementById('mailRow');
-  if (mailRow) {
-    var address = 'ryan1202' + String.fromCharCode(64) + 'foxmail.com';
-    mailRow.href = 'mailto:' + address;
-    mailRow.setAttribute('aria-label', 'Email ryan1202 at foxmail dot com');
-  }
+  document.querySelectorAll('[data-email]').forEach(function (row) {
+    var label = row.querySelector('.contact-kind').textContent;
+    var address = row.querySelector('.contact-value').textContent;
+    row.href = 'mailto:' + address.replace(' [at] ', '@');
+    row.setAttribute('aria-label', label + ' ' + address.replace(' [at] ', ' at ').replace(/\./g, ' dot '));
+  });
 
   /* ---------- footer year ---------- */
   var yearEl = document.getElementById('year');
