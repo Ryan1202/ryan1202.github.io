@@ -94,7 +94,7 @@
     .map(function (id) { return document.getElementById(id); })
     .filter(Boolean);
 
-  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"]'));
 
   function markActive(id) {
     navLinks.forEach(function (link) {
@@ -113,6 +113,36 @@
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
 
     sections.forEach(function (section) { sectionObserver.observe(section); });
+  }
+
+  /* ---------- GitHub profile and Horizon activity ---------- */
+  var avatar = document.getElementById('github-avatar');
+  if (avatar) {
+    function useLocalAvatar() {
+      avatar.src = avatar.dataset.fallback;
+    }
+
+    if (avatar.complete && !avatar.naturalWidth) useLocalAvatar();
+    else avatar.addEventListener('error', useLocalAvatar, { once: true });
+  }
+
+  var commitLink = document.getElementById('horizon-commit');
+  if (commitLink) {
+    fetch('https://api.github.com/repos/Ryan1202/Horizon-Operating-System/commits?sha=driver-refactor&per_page=1')
+      .then(function (response) {
+        return response.ok ? response.json() : [];
+      })
+      .then(function (commits) {
+        var latest = commits[0];
+        if (!latest) return;
+
+        var subject = latest.commit.message.split(/\r?\n/)[0];
+        commitLink.textContent = latest.sha.slice(0, 7) + ' ' + subject;
+        commitLink.href = latest.html_url;
+      })
+      .catch(function () {
+        // Keep the link to GitHub's commit list if the API is unavailable.
+      });
   }
 
   /* ---------- email ---------- */

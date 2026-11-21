@@ -38,10 +38,12 @@
         <span class="brand-name">Jiajun&nbsp;Wang</span>
       </a>
 
-      <nav class="nav" aria-label="Horizon pages">
-        <a href="index.html" aria-current="page">History</a>
-        <a href="memory.html">Boot &amp; memory</a>
-        <a href="interrupts.html">Scheduling &amp; interrupts</a>
+      <nav class="nav" aria-label="Site">
+        <a href="../index.html#work">Work</a>
+        <a href="../index.html#stack">Stack</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="../horizon/" aria-current="page">Horizon</a>
       </nav>
 
       <button class="theme" id="theme" type="button" aria-label="Switch theme">
@@ -54,6 +56,11 @@
   <main class="horizon" id="top">
     <section class="hero">
       <div class="wrap">
+        <nav class="horizon-links" aria-label="Horizon pages">
+          <a href="index.html" aria-current="page">Development history</a>
+          <a href="memory.html">Boot &amp; memory</a>
+          <a href="interrupts.html">Scheduling &amp; interrupts</a>
+        </nav>
         <p class="tag-line">Development history</p>
         <h1 class="hero-title">Horizon</h1>
         <p class="lede">Horizon began as a 32-bit kernel in 2021. Its history runs from early experiments with booting and loading programs to a higher-half x86_64 kernel with core subsystems written in C and Rust.</p>

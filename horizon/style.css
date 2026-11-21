@@ -26,14 +26,6 @@
   max-width: 68ch;
 }
 
-.nav a[aria-current="page"] {
-  color: var(--text);
-}
-
-.nav a[aria-current="page"]::after {
-  transform: scaleX(1);
-}
-
 @media (max-width: 560px) {
   .horizon .sec-head {
     grid-template-columns: 1fr;
@@ -45,22 +37,6 @@
   margin-top: 12px;
 }
 
-@media (max-width: 560px) {
-  .head-inner {
-    gap: 12px;
-  }
-
-  .head-inner .nav {
-    gap: clamp(8px, 3vw, 16px);
-  }
-
-  .head-inner .nav a {
-    text-align: center;
-    line-height: 1.35;
-    letter-spacing: .07em;
-  }
-
-  .head-inner .theme {
-    flex-shrink: 0;
-  }
+.horizon .horizon-links {
+  margin: 0 0 24px;
 }

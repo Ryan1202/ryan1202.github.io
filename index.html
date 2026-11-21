@@ -48,11 +48,12 @@
         <span class="brand-name">Jiajun&nbsp;Wang</span>
       </a>
 
-      <nav class="nav" aria-label="Sections">
+      <nav class="nav" aria-label="Site">
         <a href="#work">Work</a>
         <a href="#stack">Stack</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
+        <a href="horizon/">Horizon</a>
       </nav>
 
       <button class="theme" id="theme" type="button" aria-label="Switch theme">
@@ -112,8 +113,8 @@
             <div class="term-line out" data-line>Horizon 0.1.0 x86_64 <em>C / Rust</em></div>
             <div class="term-line cmd" data-line>&nbsp;% ls src</div>
             <div class="term-line out" data-line>arch  driver  fs  kernel  lib  objects</div>
-            <div class="term-line cmd" data-line>&nbsp;% git log -1 --oneline</div>
-            <div class="term-line out" data-line>0b950fe doc: 新增 Affinity 笔记</div>
+            <div class="term-line cmd" data-line>&nbsp;% git log -1 --oneline origin/driver-refactor</div>
+            <div class="term-line out" data-line><a id="horizon-commit" href="https://github.com/Ryan1202/Horizon-Operating-System/commits/driver-refactor/">View latest commit on GitHub</a></div>
             <div class="term-line cmd" data-line>&nbsp;% <span class="caret" aria-hidden="true"></span></div>
           </div>
         </aside>
@@ -170,12 +171,17 @@
               </a>
               <span class="btn-note">MIT licensed · open source</span>
             </div>
+            <nav class="horizon-links" aria-label="Horizon pages">
+              <a href="horizon/">Development history</a>
+              <a href="horizon/memory.html">Boot &amp; memory</a>
+              <a href="horizon/interrupts.html">Scheduling &amp; interrupts</a>
+            </nav>
           </div>
 
           <div class="feature-spec">
             <dl class="spec">
               <div><dt>Architecture</dt><dd>x86_64 · higher-half</dd></div>
-              <div><dt>Languages</dt><dd>C · Rust <span class="faint">153 .rs / 130 .c</span></dd></div>
+              <div><dt>Languages</dt><dd>C · Rust</dd></div>
               <div><dt>Boot</dt><dd>GRUB2 · Multiboot2</dd></div>
               <div><dt>Runs on</dt><dd>QEMU · x86_64 hardware</dd></div>
             </dl>
@@ -329,7 +335,7 @@
         <div class="about-grid">
           <div class="portrait reveal">
             <div class="portrait-img">
-              <img src="assets/img/avatar.jpg" alt="Portrait of Jiajun Wang" width="320" height="320" loading="lazy" />
+              <img id="github-avatar" src="https://github.com/Ryan1202.png?size=320" data-fallback="assets/img/avatar.jpg" alt="Portrait of Jiajun Wang" width="320" height="320" loading="lazy" />
             </div>
             <span class="portrait-cap mono">Ryan1202 · Suzhou</span>
           </div>
@@ -366,11 +372,10 @@
         </div>
 
         <div class="now reveal">
-          <h3 class="now-title"><span class="dot" aria-hidden="true"></span> Now</h3>
+          <h3 class="now-title"><span class="dot" aria-hidden="true"></span> Horizon activity</h3>
           <ul class="now-list">
-            <li><span class="mono">Oct 2026</span> Reworking APIC and IRQ affinity in Horizon for multicore.</li>
-            <li><span class="mono">Oct 2026</span> Extending Horizon's ACPI/AML support — SSDT and FACS are next.</li>
-            <li><span class="mono">2026</span> Writing up the IRQ and APIC rework in <span class="mono">doc/notes</span>.</li>
+            <li><a href="https://github.com/Ryan1202/Horizon-Operating-System/commits/driver-refactor/">Recent commits on GitHub</a></li>
+            <li><a href="https://github.com/Ryan1202/Horizon-Operating-System/tree/driver-refactor/doc/notes">Kernel development notes</a></li>
           </ul>
         </div>
       </div>
