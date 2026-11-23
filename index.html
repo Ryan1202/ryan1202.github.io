@@ -30,6 +30,8 @@
         var t = localStorage.getItem('jw-theme');
         if (t !== 'light' && t !== 'dark') t = 'dark';
         document.documentElement.setAttribute('data-theme', t);
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', t === 'dark' ? '#0b0b0d' : '#f3f0e9');
       } catch (e) { /* storage unavailable */ }
     })();
   </script>
@@ -132,7 +134,7 @@
             <div class="term-line cmd" data-line>&nbsp;% ls src</div>
             <div class="term-line out" data-line>arch  driver  fs  kernel  lib  objects</div>
             <div class="term-line cmd" data-line>&nbsp;% git log -1 --oneline origin/HEAD</div>
-            <div class="term-line out" data-line><a id="horizon-commit" href="https://github.com/Ryan1202/Horizon-Operating-System/commits/HEAD/">View latest commit on GitHub</a></div>
+            <div class="term-line out" data-line><a id="horizon-commit" href="https://github.com/Ryan1202/Horizon-Operating-System/commits/HEAD/" target="_blank" rel="noopener">View latest commit on GitHub</a></div>
             <div class="term-line cmd" data-line>&nbsp;% <span class="caret" aria-hidden="true"></span></div>
           </div>
         </aside>
@@ -184,7 +186,7 @@
               one module at a time.
             </p>
             <div class="feature-actions">
-              <a class="btn btn-solid" href="horizon/index.html">See history</a>
+              <a class="btn btn-solid btn-arrow-r" href="horizon/index.html">See history <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
               <span class="btn-note">MIT licensed · <a class="horizon-detail" href="https://github.com/Ryan1202/Horizon-Operating-System" target="_blank" rel="noopener">open source<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg></a></span>
             </div>
           </div>
@@ -268,7 +270,10 @@
         </ul>
 
         <section class="forks" id="forks" aria-labelledby="forks-title">
-          <h3 class="sec-title" id="forks-title">Forks</h3>
+          <div class="forks-head">
+            <h3 class="sec-title" id="forks-title">Forks</h3>
+            <span class="sec-note">04 repositories · upstream patches</span>
+          </div>
           <ul class="projects">
             <li class="reveal">
               <a class="proj" href="https://github.com/Ryan1202/linux" target="_blank" rel="noopener">

@@ -1,42 +1,142 @@
+/* =========================================================
+   Horizon subpages — extends ../assets/css/style.css
+   ========================================================= */
+
 .horizon .hero {
   min-height: auto;
+  padding-top: calc(var(--head-h) + 64px);
   padding-bottom: 56px;
 }
 
 .horizon .hero-title {
-  font-size: clamp(2.5rem, 9vw, 6rem);
-  margin-block: 12px 20px;
+  font-size: clamp(2.5rem, 8.6vw, 5.8rem);
+  margin-block: 22px 24px;
+}
+
+.horizon .hero-cta {
+  margin-top: 28px;
 }
 
 .horizon .section {
-  padding: 0 0 64px;
+  padding: 0 0 88px;
 }
 
 .horizon .sec-head {
-  grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
-  margin-bottom: 16px;
+  grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr);
+  margin-bottom: 18px;
+}
+
+.horizon .sec-num {
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.horizon .sec-title {
+  font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+  line-height: 1.12;
+  letter-spacing: -.03em;
 }
 
 .horizon .feature-main {
   border: 0;
-  padding: 0 0 40px;
+  padding: 0 0 44px;
 }
 
 .horizon .feature-desc {
   max-width: 68ch;
 }
 
-@media (max-width: 560px) {
-  .horizon .sec-head {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-}
-
 .horizon .feature-desc + .feature-desc {
   margin-top: 12px;
 }
 
+.horizon .feature-actions {
+  gap: 10px 12px;
+  padding-top: 22px;
+}
+
+.horizon .feature-actions .btn {
+  padding: 10px 15px;
+  font-size: 10.5px;
+}
+
+/* ---------- cross-page pager ---------- */
+.horizon-pager {
+  border-top: 1px solid var(--line);
+  margin-top: 12px;
+  padding-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: border-color .25s, background-color .25s, transform .25s var(--ease);
+}
+
+.pager-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-2px);
+}
+
+.pager-link.next {
+  grid-column: 2;
+  text-align: right;
+  align-items: flex-end;
+}
+
+.pager-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  transition: color .25s;
+}
+
+.pager-kicker svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .3s var(--ease);
+}
+
+.pager-link:hover .pager-kicker {
+  color: var(--accent);
+}
+
+.pager-link.prev:hover .pager-kicker svg {
+  transform: translateX(-3px);
+}
+
+.pager-link.next:hover .pager-kicker svg {
+  transform: translateX(3px);
+}
+
+.pager-title {
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 500;
+  letter-spacing: -.025em;
+  line-height: 1.2;
+}
+
+/* ---------- history timeline rail ---------- */
 .history-page {
   --history-rail-width: 4rem;
   --history-rail-edge: clamp(8px, 2vw, 24px);
@@ -78,6 +178,7 @@
   display: block;
   padding-block: 2px;
   color: var(--text-2);
+  transition: color .2s;
 }
 
 .history-year > a:hover,
@@ -118,6 +219,7 @@
   padding: 4px 9px;
   border-inline-start: 1px solid var(--line);
   color: var(--text-3);
+  transition: color .2s;
 }
 
 .history-year ol a::before {
@@ -131,6 +233,7 @@
   border-radius: 50%;
   background: var(--bg);
   transform: translateY(-50%);
+  transition: background-color .2s, border-color .2s;
 }
 
 .history-year ol a:hover,
@@ -145,10 +248,35 @@
 
 .history-rail a:focus-visible { outline-offset: -2px; }
 
-@media (prefers-reduced-motion: reduce) {
-  .history-rail.is-ready .history-months { transition: none; }
+/* ---------- responsive ---------- */
+@media (max-width: 720px) {
+  .horizon .hero {
+    padding-top: calc(var(--head-h) + 44px);
+    padding-bottom: 40px;
+  }
+
+  .horizon .section {
+    padding-bottom: 64px;
+  }
+
+  .horizon .sec-head {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .horizon-pager {
+    grid-template-columns: 1fr;
+  }
+
+  .pager-link.next {
+    grid-column: 1;
+  }
 }
 
 @media (max-width: 560px) {
   .history-page { --history-rail-width: 3.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .history-rail.is-ready .history-months { transition: none; }
 }

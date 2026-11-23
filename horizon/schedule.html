@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Schedule · Horizon project | Jiajun Wang</title>
+  <title>Schedule · Horizon — Jiajun Wang</title>
   <meta name="description" content="How Horizon picks runnable kernel threads, switches contexts and wakes blocked threads." />
   <meta name="author" content="Jiajun Wang" />
 
@@ -21,6 +21,8 @@
         var t = localStorage.getItem('jw-theme');
         if (t !== 'light' && t !== 'dark') t = 'dark';
         document.documentElement.setAttribute('data-theme', t);
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', t === 'dark' ? '#0b0b0d' : '#f3f0e9');
       } catch (e) { /* storage unavailable */ }
     })();
   </script>
@@ -29,7 +31,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <a class="skip" href="#milestones">Skip to content</a>
+  <a class="skip" href="#details">Skip to content</a>
   <div class="progress" id="progress" aria-hidden="true"></div>
   <header class="head" id="head">
     <div class="wrap head-inner">
@@ -72,18 +74,27 @@
   </header>
 
   <main class="horizon" id="top">
-    <section class="hero">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-glow" aria-hidden="true"></div>
       <div class="wrap">
-        <p class="tag-line reveal-load">Kernel design</p>
-        <h1 class="hero-title"><span class="line"><span>Schedule</span></span></h1>
+        <p class="kicker reveal-load">
+          <span class="dot" aria-hidden="true"></span>
+          Horizon
+          <span class="sep">/</span>
+          <span class="mono">Kernel design</span>
+        </p>
+        <h1 id="hero-title" class="hero-title"><span class="line"><span>Schedule</span></span></h1>
         <p class="lede reveal-load">How Horizon picks runnable kernel threads, switches contexts and wakes blocked threads.</p>
         <div class="hero-cta reveal-load">
-          <a class="horizon-detail source-link" href="https://github.com/Ryan1202/Horizon-Operating-System">View source</a>
+          <a class="btn btn-line" href="https://github.com/Ryan1202/Horizon-Operating-System" target="_blank" rel="noopener">
+            View source
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13L13 3M13 3H6M13 3v7"/></svg>
+          </a>
         </div>
       </div>
     </section>
 
-    <section class="section" id="milestones" aria-label="Subsystem details">
+    <section class="section" id="details" aria-label="Subsystem details">
       <div class="wrap">
         <section class="reveal" aria-label="Choosing the next kernel thread">
           <div class="sec-head">
@@ -160,6 +171,16 @@
             </div>
           </div>
         </section>
+        <nav class="horizon-pager reveal" aria-label="Horizon pages">
+          <a class="pager-link prev" href="memory.html">
+            <span class="pager-kicker"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg> Previous</span>
+            <span class="pager-title">Memory</span>
+          </a>
+          <a class="pager-link next" href="interrupts.html">
+            <span class="pager-kicker">Next <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+            <span class="pager-title">IRQ</span>
+          </a>
+        </nav>
       </div>
     </section>
   </main>

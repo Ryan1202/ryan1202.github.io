@@ -76,7 +76,8 @@
       var ratio = max > 0 ? Math.min(y / max, 1) : 0;
       progress.style.transform = 'scaleX(' + ratio + ')';
     }
-    if (historyItems) updateHistory(max > 0 && y >= max - 1);
+    if (historyItems && historyItems.length) updateHistory(max > 0 && y >= max - 1);
+    if (sections && sections.length && y < sections[0].offsetTop - window.innerHeight * 0.45) markActive(null);
     ticking = false;
   }
 
@@ -136,9 +137,9 @@
 
   function markActive(id) {
     navLinks.forEach(function (link) {
-      var isActive = link.getAttribute('href') === '#' + id;
+      var isActive = Boolean(id) && link.getAttribute('href') === '#' + id;
       link.classList.toggle('active', isActive);
-      if (isActive) link.setAttribute('aria-current', 'true');
+      if (isActive) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
   }
